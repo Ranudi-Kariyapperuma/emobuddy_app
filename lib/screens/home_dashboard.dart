@@ -1,6 +1,8 @@
+import 'package:emobuddy_app/screens/camera_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'mood_detection_screen.dart';
+import 'camera_screen.dart';
 
 class HomeDashboard extends StatelessWidget {
 
@@ -79,6 +81,7 @@ class HomeDashboard extends StatelessWidget {
                         "Mood Check",
                         Icons.camera_alt,
                         Colors.orange,
+                       
                       ),
 
                       dashboardCard(
@@ -126,7 +129,7 @@ class HomeDashboard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => MoodDetectionScreen(),
+              builder: (_) => CameraScreen(),
             ),
           );
         }
