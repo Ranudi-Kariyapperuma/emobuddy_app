@@ -35,10 +35,33 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  camera: ^0.12.0+1
+  tflite_flutter: ^0.12.1
+  image_picker: ^1.2.1
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/emologo.png"
+  min_sdk_android: 21
+  
+  # web:
+    # generate: true
+    #image_path: "path/to/image.png"
+    #background_color: "#hexcode"
+    #theme_color: "#hexcode"
+  # windows:
+    #generate: true
+    #image_path: "path/to/image.png"
+    #icon_size: 48 # min:48, max:256, default: 48
+  # macos:
+    #generate: true
+    #mage_path: "path/to/image.png"   
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -55,6 +78,18 @@ flutter:
   uses-material-design: true
   assets:
      - assets/emologo.png
+     - assets/images/banana.jpeg
+     - assets/images/bone.jpeg
+     - assets/images/cat.jpeg
+     - assets/images/dog.jpeg
+     - assets/images/fish.jpeg
+     - assets/images/fly.jpeg
+     - assets/images/frog.jpeg
+     - assets/images/fuel.jpg
+     - assets/images/lion.jpg
+     - assets/images/meat.jpeg
+     - assets/images/monkey.jpeg
+     - assets/images/scooter.jpg
      
 
   # An image asset can refer to one or more resolution-specific "variants", see
