@@ -2,10 +2,10 @@ import 'package:emobuddy_app/screens/camera_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'mood_detection_screen.dart';
+import 'parent_login.dart';
 import 'camera_screen.dart';
 
 class HomeDashboard extends StatelessWidget {
-
   final List<Color> backgroundColors = [
     Color.fromARGB(255, 254, 221, 170), // Ivory
     Color.fromARGB(255, 236, 173, 212), // Nude
@@ -16,7 +16,6 @@ class HomeDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-
         /// Background Gradient
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -32,25 +31,21 @@ class HomeDashboard extends StatelessWidget {
 
             child: Column(
               children: [
-
                 /// Logo + App Name
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      "assets/emologo.png",
-                      height: 65,
-                    ),
+                    Image.asset("assets/emologo.png", height: 65),
                     SizedBox(width: 10),
                     Text(
-                    "EmoBuddy",
-                    style: GoogleFonts.fredoka(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 68, 30, 12),
-                      letterSpacing: 1.2,
+                      "EmoBuddy",
+                      style: GoogleFonts.fredoka(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 68, 30, 12),
+                        letterSpacing: 1.2,
+                      ),
                     ),
-                  ),
                   ],
                 ),
 
@@ -75,13 +70,11 @@ class HomeDashboard extends StatelessWidget {
                     crossAxisSpacing: 18,
                     mainAxisSpacing: 18,
                     children: [
-
                       dashboardCard(
                         context,
                         "Mood Check",
                         Icons.camera_alt,
                         Colors.orange,
-                       
                       ),
 
                       dashboardCard(
@@ -104,9 +97,15 @@ class HomeDashboard extends StatelessWidget {
                         Icons.brush,
                         Colors.blue,
                       ),
+                      dashboardCard(
+                        context,
+                        "Parent",
+                        Icons.person,
+                        Colors.red,
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -117,34 +116,41 @@ class HomeDashboard extends StatelessWidget {
 
   /// Dashboard Card Widget
   Widget dashboardCard(
-      BuildContext context,
-      String title,
-      IconData icon,
-      Color color,
-      ) {
+    BuildContext context,
+    String title,
+    IconData icon,
+    Color color,
+  ) {
     return GestureDetector(
       onTap: () {
-
         if (title == "Mood Check") {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => CameraScreen(),
-            ),
+            MaterialPageRoute(builder: (_) => CameraScreen()),
           );
+          
         }
 
+        if (title == "Parent") {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => ParentLoginScreen(),
+    ),
+          );
+          
+        }
+        
       },
+
+      
+      
 
       child: Container(
         decoration: BoxDecoration(
-
           /// Colorful Gradient Cards
           gradient: LinearGradient(
-            colors: [
-              color.withOpacity(0.9),
-              color.withOpacity(0.6)
-            ],
+            colors: [color.withOpacity(0.9), color.withOpacity(0.6)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -156,20 +162,15 @@ class HomeDashboard extends StatelessWidget {
               color: Colors.black12,
               blurRadius: 8,
               offset: Offset(2, 5),
-            )
+            ),
           ],
         ),
 
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             /// Icon
-            Icon(
-              icon,
-              size: 60,
-              color: Colors.white,
-            ),
+            Icon(icon, size: 60, color: Colors.white),
 
             SizedBox(height: 15),
 

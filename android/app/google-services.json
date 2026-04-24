@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "133424272651",
+    "project_id": "emobuddy-da07a",
+    "storage_bucket": "emobuddy-da07a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133424272651:android:a5368db5905d5cf423fe0e",
+        "android_client_info": {
+          "package_name": "com.example.emobuddy_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzTT9hkFyFMLIsN0_bPo3aQJ8yKo3Pzw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

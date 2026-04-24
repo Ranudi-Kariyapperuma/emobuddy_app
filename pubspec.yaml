@@ -39,6 +39,9 @@ dependencies:
   tflite_flutter: ^0.12.1
   image_picker: ^1.2.1
   flutter_launcher_icons: ^0.14.4
+  audioplayers: ^5.2.1
+  firebase_core: ^4.6.0
+  firebase_auth: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +93,33 @@ flutter:
      - assets/images/meat.jpeg
      - assets/images/monkey.jpeg
      - assets/images/scooter.jpg
+     - assets/sounds/A.wav
+     - assets/sounds/B.wav
+     - assets/sounds/C.wav
+     - assets/sounds/D.wav
+     - assets/sounds/E.wav
+     - assets/sounds/F.wav
+     - assets/sounds/G.wav
+     - assets/sounds/H.wav
+     - assets/sounds/I.wav
+     - assets/sounds/J.wav
+     - assets/sounds/K.wav
+     - assets/sounds/L.wav
+     - assets/sounds/M.wav
+     - assets/sounds/N.wav
+     - assets/sounds/O.wav
+     - assets/sounds/P.wav
+     - assets/sounds/Q.wav
+     - assets/sounds/R.wav
+     - assets/sounds/S.wav
+     - assets/sounds/T.wav
+     - assets/sounds/U.wav
+     - assets/sounds/V.wav
+     - assets/sounds/W.wav
+     - assets/sounds/X.wav
+     - assets/sounds/Y.wav
+     - assets/sounds/Z.wav 
+     
      
 
   # An image asset can refer to one or more resolution-specific "variants", see

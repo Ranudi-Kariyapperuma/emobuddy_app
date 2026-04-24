@@ -5,9 +5,12 @@ import 'games/happy_matching.dart';
 import 'games/sad_color_therapy.dart';
 import 'games/angry_balloon.dart';
 import 'games/calm_tracing.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'utils/colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
 
         '/happy': (context) => HappyMatchingGame(),
         '/sad': (context) => ColorTherapyGame(),
-        '/angry': (context) => BalloonPopGame(),
+        '/angry': (context) => BalloonLearningGame(),
         '/calm': (context) => TracingGame(),
       },
     );

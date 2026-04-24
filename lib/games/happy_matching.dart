@@ -261,7 +261,10 @@ class _HappyMatchingGameState extends State<HappyMatchingGame>
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color.fromARGB(255, 230, 193, 248), Color.fromARGB(255, 127, 171, 248)],
+                        colors: [
+                          Color.fromARGB(255, 230, 193, 248),
+                          Color.fromARGB(255, 127, 171, 248),
+                        ],
                       ),
                       borderRadius: BorderRadius.circular(25),
                       boxShadow: [
@@ -275,19 +278,29 @@ class _HappyMatchingGameState extends State<HappyMatchingGame>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // 🎮 Title
                         Row(
                           children: [
-                            Text("🎯", style: TextStyle(fontSize: 22)),
-                            SizedBox(width: 8),
-                            Text(
-                              "MatchBox",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 0, 0, 0),
-                                letterSpacing: 1,
-                              ),
+                            IconButton(
+                              icon: Icon(Icons.arrow_back),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            // 🎮 Title
+                            Row(
+                              children: [
+                                Text("🎯", style: TextStyle(fontSize: 22)),
+                                SizedBox(width: 8),
+                                Text(
+                                  "MatchBox",
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color.fromARGB(255, 0, 0, 0),
+                                    letterSpacing: 1,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
