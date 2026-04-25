@@ -33,23 +33,37 @@ class HomeDashboard extends StatelessWidget {
               children: [
                 /// Logo + App Name
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset("assets/emologo.png", height: 65),
-                    SizedBox(width: 10),
-                    Text(
-                      "EmoBuddy",
-                      style: GoogleFonts.fredoka(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 68, 30, 12),
-                        letterSpacing: 1.2,
-                      ),
+                    /// BACK BUTTON
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back_ios_new),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
+
+                    /// CENTER CONTENT (Logo + Text)
+                    Row(
+                      children: [
+                        Image.asset("assets/emologo.png", height: 65),
+                        const SizedBox(width: 10),
+                        Text(
+                          "EmoBuddy",
+                          style: GoogleFonts.fredoka(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                            color: const Color.fromARGB(255, 68, 30, 12),
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    /// RIGHT SIDE SPACER (to balance layout)
+                    const SizedBox(width: 40),
                   ],
                 ),
-
-                SizedBox(height: 30),
 
                 /// Title
                 Text(
@@ -128,23 +142,15 @@ class HomeDashboard extends StatelessWidget {
             context,
             MaterialPageRoute(builder: (_) => CameraScreen()),
           );
-          
         }
 
         if (title == "Parent") {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (_) => ParentLoginScreen(),
-    ),
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => ParentLoginScreen()),
           );
-          
         }
-        
       },
-
-      
-      
 
       child: Container(
         decoration: BoxDecoration(

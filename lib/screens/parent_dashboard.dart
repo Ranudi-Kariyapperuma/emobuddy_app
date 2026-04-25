@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'result_page.dart';
 
 class ParentDashboard extends StatelessWidget {
-
   final List<Color> backgroundColors = [
     Color.fromARGB(255, 254, 221, 170),
     Color.fromARGB(255, 236, 173, 212),
@@ -16,7 +21,6 @@ class ParentDashboard extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
 
-        /// 🌈 Gradient Background
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: backgroundColors,
@@ -32,7 +36,6 @@ class ParentDashboard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 /// 🔝 TOP BAR
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +54,7 @@ class ParentDashboard extends StatelessWidget {
                         await FirebaseAuth.instance.signOut();
                         Navigator.pop(context);
                       },
-                    )
+                    ),
                   ],
                 ),
 
@@ -70,7 +73,7 @@ class ParentDashboard extends StatelessWidget {
                       SizedBox(width: 15),
                       Expanded(
                         child: Text(
-                          "Welcome! Track your child's progress and emotions 💙",
+                          "Welcome! Upload your child's work and get AI feedback 💙",
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -80,19 +83,22 @@ class ParentDashboard extends StatelessWidget {
 
                 SizedBox(height: 25),
 
-                /// 🎯 GRID FEATURES
+                /// 🎯 GRID CARDS
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 2,
                     crossAxisSpacing: 15,
                     mainAxisSpacing: 15,
                     children: [
-
-                      dashboardCard("Mood History", Icons.insert_chart, Colors.purple),
-                      dashboardCard("Child Progress", Icons.show_chart, Colors.green),
-                      dashboardCard("Activities", Icons.extension, Colors.orange),
-                      dashboardCard("Settings", Icons.settings, Colors.blue),
-
+                      card(context, "Coloring", Icons.color_lens, Colors.pink),
+                      card(context, "Drawing", Icons.brush, Colors.orange),
+                      card(context, "Handwriting", Icons.edit, Colors.blue),
+                      card(
+                        context,
+                        "Art Scan",
+                        Icons.camera_alt,
+                        Colors.purple,
+                      ),
                     ],
                   ),
                 ),
@@ -104,41 +110,81 @@ class ParentDashboard extends StatelessWidget {
     );
   }
 
-  /// 🎴 CARD WIDGET
-  Widget dashboardCard(String title, IconData icon, Color color) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            color.withOpacity(0.9),
-            color.withOpacity(0.6),
+  /// 🎴 CARD UI
+  Widget card(BuildContext context, String title, IconData icon, Color color) {
+    return GestureDetector(
+      onTap: () => pickImage(context),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [color.withOpacity(0.9), color.withOpacity(0.6)],
+          ),
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 8,
+              offset: Offset(2, 5),
+            ),
           ],
         ),
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-            offset: Offset(2, 5),
-          ),
-        ],
-      ),
 
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 50, color: Colors.white),
-          SizedBox(height: 10),
-          Text(
-            title,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 50, color: Colors.white),
+            SizedBox(height: 10),
+            Text(
+              title,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  /// 📷 PICK IMAGE
+  Future<void> pickImage(BuildContext context) async {
+    final picker = ImagePicker();
+
+    final XFile? file = await picker.pickImage(source: ImageSource.gallery);
+
+    if (file != null) {
+      File image = File(file.path);
+      uploadImage(context, image);
+    }
+  }
+
+  /// 🚀 UPLOAD IMAGE TO BACKEND
+  Future<void> uploadImage(BuildContext context, File image) async {
+    var request = http.MultipartRequest(
+      "POST",
+      Uri.parse("http://10.0.2.2:8000/predict"), // change this
+    );
+
+    request.files.add(await http.MultipartFile.fromPath("file", image.path));
+
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      final res = await response.stream.bytesToString();
+      final data = jsonDecode(res);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              ResultPage(data: {...data, "image_path": image.path}),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Upload failed. Try again")));
+    }
   }
 }

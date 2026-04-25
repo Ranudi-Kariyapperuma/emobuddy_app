@@ -106,21 +106,37 @@ class _ParentLoginScreenState extends State<ParentLoginScreen> {
               children: [
                 SizedBox(height: 20),
 Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    /// BACK BUTTON
+    IconButton(
+      icon: const Icon(Icons.arrow_back_ios_new),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    ),
+
+    /// CENTER CONTENT (Logo + Text)
+    Row(
       children: [
         Image.asset("assets/emologo.png", height: 65),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Text(
           "EmoBuddy",
           style: GoogleFonts.fredoka(
             fontSize: 30,
             fontWeight: FontWeight.w600,
-            color: Color.fromARGB(255, 68, 30, 12),
+            color: const Color.fromARGB(255, 68, 30, 12),
             letterSpacing: 1.2,
           ),
         ),
       ],
     ),
+
+    /// RIGHT SIDE SPACER (to balance layout)
+    const SizedBox(width: 40),
+  ],
+),
 
     SizedBox(height: 30),
 

@@ -50,4 +50,7 @@ def predict_image(image: Image.Image):
         "xgb_confidence": xgb_prob,
 
         "explanation": generate_explanation(cnn_prob, xgb_prob)
+        
+        
     }
+    
