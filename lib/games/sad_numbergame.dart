@@ -87,13 +87,13 @@ class NumberCalmApp extends StatelessWidget {
         iconTheme: IconThemeData(color: kAccentSoft),
       ),
     ),
-    home: const HomeScreen(),
+    home: const SadNumberGame(),
   );
 }
 
 // ─── Home Screen ──────────────────────────────────────────────────────────────
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class SadNumberGame extends StatelessWidget {
+  const SadNumberGame({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
     body: SafeArea(
