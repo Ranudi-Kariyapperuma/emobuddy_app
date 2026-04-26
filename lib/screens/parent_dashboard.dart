@@ -20,7 +20,6 @@ class ParentDashboard extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: backgroundColors,
@@ -28,11 +27,9 @@ class ParentDashboard extends StatelessWidget {
             end: Alignment.bottomRight,
           ),
         ),
-
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20),
-
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -47,7 +44,6 @@ class ParentDashboard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     IconButton(
                       icon: Icon(Icons.logout),
                       onPressed: () async {
@@ -84,21 +80,18 @@ class ParentDashboard extends StatelessWidget {
                 SizedBox(height: 25),
 
                 /// 🎯 GRID CARDS
+                /// Each card passes its own tab name — this is the key change.
+                /// "Art Scan" is removed because the backend only accepts
+                /// Coloring / Drawing / Handwriting.
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 2,
                     crossAxisSpacing: 15,
                     mainAxisSpacing: 15,
                     children: [
-                      card(context, "Coloring", Icons.color_lens, Colors.pink),
-                      card(context, "Drawing", Icons.brush, Colors.orange),
-                      card(context, "Handwriting", Icons.edit, Colors.blue),
-                      card(
-                        context,
-                        "Art Scan",
-                        Icons.camera_alt,
-                        Colors.purple,
-                      ),
+                      _card(context, "Coloring",     Icons.color_lens,  Colors.pink),
+                      _card(context, "Drawing",      Icons.brush,       Colors.orange),
+                      _card(context, "Handwriting",  Icons.edit,        Colors.blue),
                     ],
                   ),
                 ),
@@ -110,10 +103,10 @@ class ParentDashboard extends StatelessWidget {
     );
   }
 
-  /// 🎴 CARD UI
-  Widget card(BuildContext context, String title, IconData icon, Color color) {
+  /// 🎴 CARD — now receives [tabName] and passes it all the way to the API
+  Widget _card(BuildContext context, String tabName, IconData icon, Color color) {
     return GestureDetector(
-      onTap: () => pickImage(context),
+      onTap: () => _pickImage(context, tabName),   // ← tabName flows in here
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -121,21 +114,16 @@ class ParentDashboard extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8,
-              offset: Offset(2, 5),
-            ),
+            BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(2, 5)),
           ],
         ),
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: 50, color: Colors.white),
             SizedBox(height: 10),
             Text(
-              title,
+              tabName,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -147,44 +135,64 @@ class ParentDashboard extends StatelessWidget {
     );
   }
 
-  /// 📷 PICK IMAGE
-  Future<void> pickImage(BuildContext context) async {
+  /// 📷 PICK IMAGE — now carries [selectedTab] forward
+  Future<void> _pickImage(BuildContext context, String selectedTab) async {
     final picker = ImagePicker();
-
     final XFile? file = await picker.pickImage(source: ImageSource.gallery);
 
     if (file != null) {
-      File image = File(file.path);
-      uploadImage(context, image);
+      _uploadImage(context, File(file.path), selectedTab);
     }
   }
 
-  /// 🚀 UPLOAD IMAGE TO BACKEND
-  Future<void> uploadImage(BuildContext context, File image) async {
-    var request = http.MultipartRequest(
-      "POST",
-      Uri.parse("http://10.0.2.2:8000/predict"), // change this
+  /// 🚀 UPLOAD — sends both the image file AND selected_tab to the backend
+  Future<void> _uploadImage(BuildContext context, File image, String selectedTab) async {
+    // Show a loading indicator while waiting for the API
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Center(child: CircularProgressIndicator()),
     );
 
-    request.files.add(await http.MultipartFile.fromPath("file", image.path));
-
-    var response = await request.send();
-
-    if (response.statusCode == 200) {
-      final res = await response.stream.bytesToString();
-      final data = jsonDecode(res);
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              ResultPage(data: {...data, "image_path": image.path}),
-        ),
+    try {
+      var request = http.MultipartRequest(
+        "POST",
+       Uri.parse("http://192.168.1.8:8000/predict"),
       );
-    } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Upload failed. Try again")));
+
+      // ── The two fields the backend now expects ──────────────────────────────
+      request.fields['selected_tab'] = selectedTab;          // NEW
+      request.files.add(
+        await http.MultipartFile.fromPath("file", image.path),
+      );
+
+      var response = await request.send();
+
+      // Dismiss loading
+      Navigator.pop(context);
+
+      if (response.statusCode == 200) {
+        final res  = await response.stream.bytesToString();
+        final data = jsonDecode(res) as Map<String, dynamic>;
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ResultPage(
+              data: {...data, "image_path": image.path},
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Upload failed (${response.statusCode}). Try again.")),
+        );
+      }
+    } catch (e) {
+      Navigator.pop(context); // dismiss loading if still open
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
     }
   }
 }

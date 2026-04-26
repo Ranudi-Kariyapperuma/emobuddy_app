@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/splash_screen.dart';
 import 'screens/camera_screen.dart';
 import 'games/happy_matching.dart';
-import 'games/sad_color_therapy.dart';
+import 'games/sad_numbergame.dart';
 import 'games/angry_balloon.dart';
 import 'games/calm_tracing.dart';
 import 'package:firebase_core/firebase_core.dart';
