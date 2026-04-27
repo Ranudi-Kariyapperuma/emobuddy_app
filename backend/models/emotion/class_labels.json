@@ -1,0 +1,18 @@
+{
+  "class_labels": [
+    "Natural",
+    "anger",
+    "fear",
+    "joy",
+    "sadness",
+    "surprise"
+  ],
+  "class_indices": {
+    "Natural": 0,
+    "anger": 1,
+    "fear": 2,
+    "joy": 3,
+    "sadness": 4,
+    "surprise": 5
+  }
+}
