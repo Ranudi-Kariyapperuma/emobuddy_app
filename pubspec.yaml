@@ -45,6 +45,7 @@ dependencies:
   http : 1.6.0
   lottie: ^3.1.0
   shared_preferences: ^2.5.5
+  flutter_tts: ^4.2.5
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +97,11 @@ flutter:
      - assets/images/meat.jpeg
      - assets/images/monkey.jpeg
      - assets/images/scooter.jpg
+     - assets/images/bg1.jpg
+     - assets/images/bg2.jpg
+     - assets/images/bg3.jpg
+     - assets/images/kid_happy.jpg
+     - assets/images/kid_idle.jpg
      - assets/sounds/A.wav
      - assets/sounds/B.wav
      - assets/sounds/C.wav
@@ -124,9 +130,11 @@ flutter:
      - assets/sounds/Z.wav 
      - assets/lottie/parent.json
      - assets/lottie/child.json
-     
-     
+     - assets/lottie/kid.json
+     - assets/lottie/kid2.json
+     - assets/lottie/kid3.json
 
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
