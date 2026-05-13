@@ -100,6 +100,9 @@ flutter:
      - assets/images/bg1.jpg
      - assets/images/bg2.jpg
      - assets/images/bg3.jpg
+     - assets/images/bathroom.jpg
+     - assets/images/bedroom.jpg
+     - assets/images/kitchen.jpg
      - assets/images/kid_happy.jpg
      - assets/images/kid_idle.jpg
      - assets/sounds/A.wav
