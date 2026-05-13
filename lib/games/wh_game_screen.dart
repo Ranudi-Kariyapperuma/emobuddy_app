@@ -142,7 +142,7 @@ class _WHGameScreenState extends State<WHGameScreen>
                 padding: EdgeInsets.all(14),
 
                 decoration: BoxDecoration(
-                  color: Colors.pinkAccent,
+                  color: const Color.fromARGB(255, 70, 43, 3),
                   shape: BoxShape.circle,
 
                   boxShadow: [
