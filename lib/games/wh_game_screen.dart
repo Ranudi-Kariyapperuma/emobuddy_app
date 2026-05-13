@@ -96,11 +96,7 @@ class _WHGameScreenState extends State<WHGameScreen>
     final screenWidth = MediaQuery.of(context).size.width;
 
     // 🎯 Triangle option layout
-    final positions = [
-      Offset(0, 0),
-      Offset(-130, 180),
-      Offset(130, 180),
-    ];
+    final positions = [Offset(0, 0), Offset(-130, 180), Offset(130, 180)];
 
     return Scaffold(
       body: Stack(
@@ -116,16 +112,20 @@ class _WHGameScreenState extends State<WHGameScreen>
           ),
 
           // 🌑 DARK OVERLAY
-          Container(
-            color: Colors.black.withOpacity(0.15),
-          ),
+          Container(color: Colors.black.withOpacity(0.15)),
 
           // ⭐ STAR POPUP
           if (showStar)
-            Center(
-              child: Text(
-                "⭐",
-                style: TextStyle(fontSize: 120),
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment(0, 0.1),
+
+                child: AnimatedScale(
+                  scale: showStar ? 1.2 : 0.8,
+                  duration: Duration(milliseconds: 300),
+
+                  child: Text("⭐", style: TextStyle(fontSize: 80)),
+                ),
               ),
             ),
 
@@ -206,10 +206,7 @@ class _WHGameScreenState extends State<WHGameScreen>
                   child: Column(
                     children: [
                       // 🧸 EMOJI
-                      Text(
-                        option.emoji,
-                        style: TextStyle(fontSize: 80),
-                      ),
+                      Text(option.emoji, style: TextStyle(fontSize: 80)),
 
                       SizedBox(height: 6),
 
@@ -259,10 +256,7 @@ class _WHGameScreenState extends State<WHGameScreen>
             right: 20,
 
             child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 18,
-                vertical: 10,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
 
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.25),
