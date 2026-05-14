@@ -32,7 +32,7 @@ class Dashboard extends StatelessWidget {
                 children: [
                   // 🔥 ASD TITLE
                   const Text(
-                    "ASD DETECTION DASHBOARD",
+                    "EmoBuddy Dashboard",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color.fromARGB(255, 50, 8, 12),
@@ -42,7 +42,7 @@ class Dashboard extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 30),
 
                   // HEADER CARD
                   _buildHeaderCard(),
@@ -89,7 +89,7 @@ class Dashboard extends StatelessWidget {
           SizedBox(height: 10),
 
           Text(
-            "Upload drawings, handwriting, coloring, or face scan for analysis",
+            "Upload drawings, handwriting, coloring, and face scan for analysis",
             style: TextStyle(color: Colors.white70, fontSize: 14),
           ),
         ],

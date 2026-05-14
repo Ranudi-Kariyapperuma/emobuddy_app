@@ -1,4 +1,5 @@
 import 'package:emobuddy_app/screens/dashboard.dart';
+import 'package:emobuddy_app/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Dashboard()),
+          MaterialPageRoute(builder: (context) => ProfileScreen()),
         );
       }
     });

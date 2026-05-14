@@ -129,6 +129,7 @@ flutter:
      - assets/images/drawimg.jpg
      - assets/images/handimg.jpg
      - assets/images/colorimg.jpg
+     - assets/images/prof.jpg
      - assets/sounds/A.wav
      - assets/sounds/B.wav
      - assets/sounds/C.wav
@@ -162,6 +163,7 @@ flutter:
      - assets/lottie/kid3.json
      - assets/lottie/panda.json
      - assets/lottie/sparkel.json
+     - assets/lottie/bunny.json
 
     
   # An image asset can refer to one or more resolution-specific "variants", see
