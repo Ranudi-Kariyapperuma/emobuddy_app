@@ -100,6 +100,9 @@ flutter:
      - assets/images/bg1.jpg
      - assets/images/bg2.jpg
      - assets/images/bg3.jpg
+     - assets/images/b1.jpg
+     - assets/images/b2.jpg
+     - assets/images/b3.jpg
      - assets/images/bathroom.jpg
      - assets/images/bedroom.jpg
      - assets/images/kitchen.jpg
@@ -108,6 +111,9 @@ flutter:
      - assets/images/room1.jpg
      - assets/images/room2.jpg
      - assets/images/room3.jpg
+     - assets/images/puzzel1.jpg
+     - assets/images/puzzel2.jpg
+     - assets/images/puzzel3.jpg
      - assets/sounds/A.wav
      - assets/sounds/B.wav
      - assets/sounds/C.wav
