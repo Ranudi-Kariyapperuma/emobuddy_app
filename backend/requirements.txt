@@ -1,9 +1,13 @@
 fastapi
 uvicorn
-python-multipart
 tensorflow
-xgboost
-scikit-learn
-Pillow
 numpy
+pandas
+opencv-python
+pillow
+scikit-learn
+xgboost
 joblib
+python-multipart
+matplotlib
+seaborn

@@ -1,14 +1,13 @@
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from PIL import Image
-import io
+import shutil
+import os
 
-from model_utils import predict_image                    # ASD model
+from model_utils import process_activity_image
+from facial_model_utils import process_facial_image
+from combined_result import combine_results
 
-from emotion_model_utils import predict_emotion          # emotion model
-
-
-app = FastAPI(title="ASD Detection API")
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,56 +17,68 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-VALID_TABS = {"Coloring", "Drawing", "Handwriting"}
+
+UPLOAD_DIR = "uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 @app.get("/")
 def home():
-    return {"message": "ASD Detection API running 🚀"}
+    return {"message": "ASD Detection Backend Running"}
 
-# ASD endpoint 
-@app.post("/predict")
-async def predict(
-    file: UploadFile = File(...),
-    selected_tab: str = Form(...),   # "Coloring" | "Drawing" | "Handwriting"
+
+@app.post("/predict/activity")
+async def predict_activity(
+    category: str,
+    file: UploadFile = File(...)
 ):
-    # Validate tab value
-    if selected_tab not in VALID_TABS:
-        raise HTTPException(
-            status_code=422,
-            detail=f"selected_tab must be one of {sorted(VALID_TABS)}. Got '{selected_tab}'.",
-        )
 
-    contents = await file.read()
-    image = Image.open(io.BytesIO(contents))
+    file_path = os.path.join(UPLOAD_DIR, file.filename)
 
-    result = predict_image(image, selected_tab)
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    result = process_activity_image(file_path, category)
+
     return result
 
-# ── NEW Emotion endpoint 
 
-@app.post("/predict-emotion")
-async def predict_emotion_route(
-    file: UploadFile = File(...),
-):
-    """
-    Accepts a face image and returns the detected mood.
+@app.post("/predict/facial")
+async def predict_facial(file: UploadFile = File(...)):
 
-    Response JSON:
-    {
-        "raw_emotion":  "joy",      // model class name
-        "flutter_mood": "happy",    // Flutter route key
-        "confidence":   0.87,
-        "all_scores":   { "anger": 0.02, "fear": 0.01, ... }
-    }
-    """
+    file_path = os.path.join(UPLOAD_DIR, file.filename)
 
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
 
-    contents = await file.read()
-    try:
-        image = Image.open(io.BytesIO(contents))
-    except Exception:
-        raise HTTPException(status_code=400, detail="Could not read image file.")
+    result = process_facial_image(file_path)
 
-    result = predict_emotion(image)
     return result
+
+
+@app.post("/predict/final")
+async def final_prediction(
+    category: str,
+    activity_file: UploadFile = File(...),
+    facial_file: UploadFile = File(...)
+):
+
+    activity_path = os.path.join(UPLOAD_DIR, activity_file.filename)
+    facial_path = os.path.join(UPLOAD_DIR, facial_file.filename)
+
+    with open(activity_path, "wb") as buffer:
+        shutil.copyfileobj(activity_file.file, buffer)
+
+    with open(facial_path, "wb") as buffer:
+        shutil.copyfileobj(facial_file.file, buffer)
+
+    activity_result = process_activity_image(activity_path, category)
+
+    if activity_result["status"] == "mismatch":
+        return activity_result
+
+    facial_result = process_facial_image(facial_path)
+
+    final_result = combine_results(activity_result, facial_result)
+
+    return final_result

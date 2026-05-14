@@ -1,115 +1,141 @@
+# pylint: disable=no-member
+import tensorflow as tf
 import numpy as np
-from PIL import Image
-from keras.models import load_model
+import cv2
+import pickle
 import joblib
 
-IMG_SIZE = (128, 128)
-
-# ── Load all models ────────────────────────────────────────────────────────────
-cnn_model         = load_model("models/cnn_model_final.keras")
-feature_extractor = load_model("models/cnn_feature_extractor.keras")
-xgb_model         = joblib.load("models/xgboost_model.pkl")
-
-category_model    = load_model("models/category_classifier.keras")
-category_le       = joblib.load("models/category_label_encoder.pkl")
-# category_le.classes_ → e.g. ['Coloring', 'Drawing', 'Handwriting']
+IMAGE_SIZE = 224
 
 
-# ── Helpers ────────────────────────────────────────────────────────────────────
-def preprocess(image: Image.Image):
-    """Convert a PIL image to a normalised (1, H, W, 3) numpy batch."""
-    img = image.convert("RGB").resize(IMG_SIZE)
-    return np.expand_dims(np.array(img) / 255.0, axis=0).astype(np.float32)
+# =========================
+# LOAD MODELS
+# =========================
+
+category_model = tf.keras.models.load_model(
+    "models/category_classifier.keras"
+)
+
+cnn_model = tf.keras.models.load_model(
+    "models/cnn_model_final.keras"
+)
+
+feature_extractor = tf.keras.models.load_model(
+    "models/cnn_feature_extractor.keras"
+)
+
+xgb_model = joblib.load(
+    "models/xgboost_model.pkl"
+)
+
+with open("models/category_label_encoder.pkl", "rb") as f:
+    label_encoder = pickle.load(f)
 
 
-def generate_explanation(cnn_prob: float, xgb_prob: float) -> str:
-    avg = (cnn_prob + xgb_prob) / 2
-    if avg > 0.5:
-        return (
-            "Irregular strokes, repetition, and less structured patterns were "
-            "detected, which are commonly associated with ASD traits."
-        )
-    return (
-        "Balanced structure, clear shapes, and organised drawing patterns were "
-        "detected, which are less associated with ASD traits."
-    )
+# =========================
+# PREPROCESS IMAGE
+# =========================
 
 
-# ── Main prediction function ───────────────────────────────────────────────────
-def predict_image(image: Image.Image, selected_tab: str):
-    """
-    Two-stage pipeline:
-      Stage 1 → Category Classifier (gate)
-      Stage 2 → ASD Detection (only if category matches selected_tab)
+def preprocess_image(image_path):
 
-    selected_tab: one of 'Coloring', 'Drawing', 'Handwriting'
-                  (case-insensitive match)
-    """
-    img_batch = preprocess(image)
+    image = cv2.imread(image_path)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    # ── STAGE 1: Category Classifier ──────────────────────────────────────────
-    cat_probs      = category_model.predict(img_batch, verbose=0)[0]   # shape (3,)
-    cat_pred_idx   = int(np.argmax(cat_probs))
-    cat_pred_label = category_le.inverse_transform([cat_pred_idx])[0]  # e.g. 'Drawing'
-    cat_confidence = float(cat_probs[cat_pred_idx])
+    image = cv2.resize(image, (IMAGE_SIZE, IMAGE_SIZE))
 
-    # Build a per-class confidence dict for the frontend
-    category_scores = {
-        label: round(float(cat_probs[i]) * 100, 1)
-        for i, label in enumerate(category_le.classes_)
-    }
+    image = image / 255.0
 
-    # ── Gate check ─────────────────────────────────────────────────────────────
-    if cat_pred_label.lower() != selected_tab.lower():
-        return {
-            "status": "rejected",
-            "reason": "category_mismatch",
-            "selected_tab": selected_tab,
-            "predicted_category": cat_pred_label,
-            "category_confidence": round(cat_confidence * 100, 1),
-            "category_scores": category_scores,
-            "message": (
-                f"This image looks like a '{cat_pred_label}', "
-                f"but you selected the '{selected_tab}' tab. "
-                f"Please upload a {selected_tab} image."
-            ),
-            # ASD fields are null — frontend should show the rejection message
-            "final_prediction": None,
-            "confidence": None,
-            "cnn_prediction": None,
-            "cnn_confidence": None,
-            "xgb_prediction": None,
-            "xgb_confidence": None,
-            "explanation": None,
-        }
+    image = np.expand_dims(image, axis=0)
 
-    # ── STAGE 2: ASD Detection ─────────────────────────────────────────────────
-    cnn_prob  = float(cnn_model.predict(img_batch, verbose=0)[0][0])
-    cnn_label = "ASD" if cnn_prob > 0.5 else "Non-ASD"
+    return image
 
-    features  = feature_extractor.predict(img_batch, verbose=0)
-    xgb_prob  = float(xgb_model.predict_proba(features)[0][1])
-    xgb_label = "ASD" if xgb_prob > 0.5 else "Non-ASD"
 
-    final_prob  = (cnn_prob + xgb_prob) / 2
-    final_label = "ASD" if final_prob > 0.5 else "Non-ASD"
+# =========================
+# CATEGORY CLASSIFIER
+# =========================
+
+
+def classify_category(image_path):
+
+    image = preprocess_image(image_path)
+
+    prediction = category_model.predict(image)
+
+    predicted_index = np.argmax(prediction)
+
+    predicted_label = label_encoder.inverse_transform(
+        [predicted_index]
+    )[0]
+
+    confidence = float(np.max(prediction)) * 100
+
+    return predicted_label, confidence
+
+
+# =========================
+# ASD PREDICTION
+# =========================
+
+
+def predict_asd(image_path):
+
+    image = preprocess_image(image_path)
+
+    # CNN Prediction
+    cnn_prediction = cnn_model.predict(image)[0][0]
+
+    cnn_percentage = float(cnn_prediction * 100)
+
+    # Feature Extraction
+    features = feature_extractor.predict(image)
+
+    features = features.flatten().reshape(1, -1)
+
+    # XGBoost Prediction
+    xgb_prediction = xgb_model.predict_proba(features)[0][1]
+
+    xgb_percentage = float(xgb_prediction * 100)
+    
+    overall_percentage = (cnn_percentage + xgb_percentage) / 2
+
+    if overall_percentage >= 50:
+        label = "ASD Detected"
+    else:
+        label = "No ASD"
 
     return {
-        "status": "accepted",
-        "selected_tab": selected_tab,
-        "predicted_category": cat_pred_label,
-        "category_confidence": round(cat_confidence * 100, 1),
-        "category_scores": category_scores,
-        "message": "ASD detection complete.",
+        "cnn_percentage": round(cnn_percentage, 2),
+        "xgb_percentage": round(xgb_percentage, 2),
+        "overall_percentage": round(overall_percentage, 2),
+        "prediction": label
+    }
 
-        "final_prediction": final_label,
-        "confidence": round(final_prob * 100, 1),
+# =========================
+# FULL PIPELINE
+# =========================
 
-        "cnn_prediction": cnn_label,
-        "cnn_confidence": round(cnn_prob * 100, 1),
 
-        "xgb_prediction": xgb_label,
-        "xgb_confidence": round(xgb_prob * 100, 1),
+def process_activity_image(image_path, selected_category):
 
-        "explanation": generate_explanation(cnn_prob, xgb_prob),
+    predicted_category, confidence = classify_category(image_path)
+
+    if predicted_category.lower() != selected_category.lower():
+
+        return {
+            "status": "mismatch",
+            "message": f"Uploaded image belongs to {predicted_category}",
+            "predicted_category": predicted_category,
+            "confidence": round(confidence, 2)
+        }
+        
+        
+    asd_result = predict_asd(image_path)
+
+    return {
+        "status": "success",
+        "selected_category": selected_category,
+        "predicted_category": predicted_category,
+        "category_confidence": round(confidence, 2),
+        "asd_result": asd_result
     }
