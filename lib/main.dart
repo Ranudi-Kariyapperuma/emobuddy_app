@@ -1,3 +1,4 @@
+import 'package:emobuddy_app/games/fruitvegisort.dart';
 import 'package:emobuddy_app/games/routing_screen.dart';
 import 'package:emobuddy_app/games/wh_game_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 🚀 START SCREEN
-      home: RoutingScreen(),
+      home: FruitVegiSortGame(),
 
       // 🔥 ROUTES (VERY IMPORTANT)
       routes: {

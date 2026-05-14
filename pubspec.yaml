@@ -105,6 +105,9 @@ flutter:
      - assets/images/kitchen.jpg
      - assets/images/kid_happy.jpg
      - assets/images/kid_idle.jpg
+     - assets/images/room1.jpg
+     - assets/images/room2.jpg
+     - assets/images/room3.jpg
      - assets/sounds/A.wav
      - assets/sounds/B.wav
      - assets/sounds/C.wav
@@ -136,6 +139,8 @@ flutter:
      - assets/lottie/kid.json
      - assets/lottie/kid2.json
      - assets/lottie/kid3.json
+     - assets/lottie/panda.json
+     - assets/lottie/sparkel.json
 
     
   # An image asset can refer to one or more resolution-specific "variants", see
