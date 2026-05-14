@@ -117,6 +117,12 @@ flutter:
      - assets/images/pandab.jpg
      - assets/images/catpuzzel.jpg
      - assets/images/mildbg.jpg
+     - assets/images/moderatebg.jpg
+     - assets/images/wh.jpg
+     - assets/images/routine.jpg
+     - assets/images/puz.jpg
+     - assets/images/sort.jpg
+     - assets/images/severebg.jpg
      - assets/sounds/A.wav
      - assets/sounds/B.wav
      - assets/sounds/C.wav
