@@ -29,93 +29,116 @@ SEVERITY_BANDS = [
 GAMES: dict[str, list[dict]] = {
     "Mild": [
         {
-            "name":        "Emotion Match Cards",
-            "type":        "Cognitive / Social",
-            "description": "Match facial expression cards to emotion words. "
-                           "Builds emotional recognition in a low-pressure setting.",
-            "skills":      ["Emotion recognition", "Matching", "Language"],
+            "name": "Angry Balloon - Learn & Pop",
+            "type": "Cognitive / Language / Attention",
+            "description": (
+                "A balloon popping learning game where children identify letters, "
+                "follow targets, and learn alphabetical order through interactive play. "
+                "Includes free play, target matching, and A-Z sequencing modes."
+            ),
+            "skills": [
+                "Letter recognition",
+                "Attention control",
+                "Sequencing (A-Z)",
+                "Reaction time",
+                "Auditory learning"
+            ],
+            "file": "angry_balloon.dart"
         },
         {
-            "name":        "Turn-Taking Puzzle",
-            "type":        "Social / Fine Motor",
-            "description": "Two-player jigsaw where each child places one piece per turn. "
-                           "Encourages patience and cooperative play.",
-            "skills":      ["Turn-taking", "Social interaction", "Fine motor"],
-        },
-        {
-            "name":        "Story Sequencing Game",
-            "type":        "Cognitive / Language",
-            "description": "Arrange picture cards to form a short story. "
-                           "Supports narrative understanding and verbal expression.",
-            "skills":      ["Sequencing", "Narrative", "Communication"],
-        },
-        {
-            "name":        "Simple Coding Maze",
-            "type":        "STEM / Problem Solving",
-            "description": "Use directional arrow cards to guide a character through a maze. "
-                           "Introduces logical thinking without a screen.",
-            "skills":      ["Logic", "Planning", "Spatial awareness"],
-        },
+            "name": "Happy Matching Game (MatchBox)",
+            "type": "Cognitive / Visual Association",
+            "description": (
+                "An interactive image-matching game where children connect related items "
+                "(e.g., animal → food) using visual pairing. Reinforces association skills "
+                "through progressive levels."
+            ),
+            "skills": [
+                "Visual association",
+                "Problem solving",
+                "Memory",
+                "Pattern recognition",
+                "Hand-eye coordination"
+            ],
+            "file": "happy_matching.dart"
+        }
     ],
+
     "Moderate": [
         {
-            "name":        "Sensory Colour Sorting",
-            "type":        "Sensory / Fine Motor",
-            "description": "Sort textured, brightly coloured objects into matching trays. "
-                           "Calming sensory input combined with categorisation practice.",
-            "skills":      ["Sensory processing", "Categorisation", "Fine motor"],
+            "name": "Morning Routine Game (Drag & Drop)",
+            "type": "Cognitive / Daily Living Skills / Routine Building",
+            "description": (
+                "An interactive drag-and-drop daily routine game where children complete "
+                "morning activities such as waking up, brushing teeth, washing face, "
+                "eating breakfast, and preparing for school. "
+                "Includes voice guidance, visual scenes, and positive reinforcement."
+            ),
+            "skills": [
+                "Routine sequencing",
+                "Daily living skills",
+                "Motor coordination",
+                "Attention",
+                "Task completion"
+            ],
+            "file": "routine_screen.dart"
         },
+
         {
-            "name":        "Mirror Me Movement Game",
-            "type":        "Social / Gross Motor",
-            "description": "Caregiver and child take turns mirroring each other's body movements. "
-                           "Builds imitation, eye contact, and body awareness.",
-            "skills":      ["Imitation", "Eye contact", "Body awareness"],
-        },
-        {
-            "name":        "Visual Schedule Bingo",
-            "type":        "Cognitive / Routine",
-            "description": "Bingo cards use pictures of daily-routine activities. "
-                           "Reinforces schedule understanding in a game format.",
-            "skills":      ["Routine", "Visual learning", "Attention"],
-        },
-        {
-            "name":        "Bubble Wrap Pop Counting",
-            "type":        "Sensory / Math",
-            "description": "Pop numbered bubble-wrap squares to practise counting 1-20. "
-                           "Satisfying tactile feedback motivates engagement.",
-            "skills":      ["Numeracy", "Sensory regulation", "Focus"],
-        },
+            "name": "WH Question Game (Learning Quiz Adventure)",
+            "type": "Cognitive / Language / Communication",
+            "description": (
+                "A WH-question based learning game where children answer interactive questions "
+                "using visual options and animations. Includes voice feedback, star rewards, "
+                "and multiple animated backgrounds to improve engagement."
+            ),
+            "skills": [
+                "Language comprehension",
+                "Question answering (What/Where/Who)",
+                "Decision making",
+                "Visual learning",
+                "Attention"
+            ],
+            "file": "wh_game_screen.dart"
+        }
     ],
     "Severe": [
         {
-            "name":        "Cause-and-Effect Toy Play",
-            "type":        "Sensory / Cognitive",
-            "description": "Press-a-button toys that produce predictable light/sound. "
-                           "Teaches basic cause-and-effect with instant reward.",
-            "skills":      ["Cause & effect", "Attention", "Sensory stimulation"],
+            "name": "Fruit & Vegetable Sort Challenge",
+            "type": "Cognitive / Classification / Attention",
+            "description": (
+                "An interactive drag-and-drop sorting game where children classify fruits and vegetables "
+                "into correct categories. The game includes multiple levels with increasing item count, "
+                "background changes, and real-time voice feedback using TTS."
+            ),
+            "skills": [
+                "Category recognition",
+                "Visual discrimination",
+                "Attention to detail",
+                "Decision making",
+                "Auditory processing",
+                "Hand-eye coordination"
+            ],
+            "file": "fruitvegisort.dart"
         },
         {
-            "name":        "Tactile Sensory Bin",
-            "type":        "Sensory / Exploration",
-            "description": "Explore bins filled with sand, rice, or water beads. "
-                           "Supports sensory desensitisation and hand exploration.",
-            "skills":      ["Sensory tolerance", "Exploration", "Calm regulation"],
-        },
-        {
-            "name":        "Simple AAC Symbol Matching",
-            "type":        "Communication / Cognitive",
-            "description": "Match AAC (Augmentative & Alternative Communication) picture symbols "
-                           "to real objects. Lays groundwork for functional communication.",
-            "skills":      ["Communication", "Symbol recognition", "Matching"],
-        },
-        {
-            "name":        "Rhythm & Music Clapping",
-            "type":        "Sensory / Social",
-            "description": "Clap or tap simple beat patterns together with a caregiver. "
-                           "Encourages joint attention and auditory processing.",
-            "skills":      ["Joint attention", "Auditory processing", "Rhythm"],
-        },
+            "name": "Animal Image Puzzle Builder",
+            "type": "Cognitive / Spatial Reasoning / Problem Solving",
+            "description": (
+                "A drag-and-drop jigsaw puzzle game where players reconstruct animal images by placing "
+                "shuffled pieces into correct grid positions. Includes multi-level progression, "
+                "animated feedback, and increasing grid complexity for higher difficulty."
+            ),
+            "skills": [
+                "Spatial reasoning",
+                "Problem solving",
+                "Memory",
+                "Visual matching",
+                "Fine motor skills",
+                "Pattern recognition"
+            ],
+            "file": "puzzel.dart"
+        }
     ],
 }
 
@@ -212,8 +235,8 @@ def build_combined_result(
 
     # ── Decision ──────────────────────────────────────────────────────────────
     asd_detected = overall >= ASD_THRESHOLD
-    severity     = determine_severity(overall)
-    games        = get_games(severity) if severity else []
+    severity = determine_severity(overall)
+    games = get_games(severity) if severity else []
 
     # ── Human-readable summary ────────────────────────────────────────────────
     if asd_detected:

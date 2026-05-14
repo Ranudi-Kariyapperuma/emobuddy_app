@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 🚀 START SCREEN
-      home: SevereScreen(),
+      home: SplashScreen(),
 
       // 🔥 ROUTES (VERY IMPORTANT)
       routes: {
