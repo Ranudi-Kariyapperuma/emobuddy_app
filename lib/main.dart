@@ -7,6 +7,8 @@ import 'package:emobuddy_app/screens/Moderate_screen.dart';
 import 'package:emobuddy_app/screens/Severe_screen.dart';
 import 'package:emobuddy_app/screens/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';                    // ✅ ADD THIS
+import 'package:emobuddy_app/providers/result_provider.dart'; // ✅ ADD THIS
 import 'screens/splash_screen.dart';
 import 'screens/camera_screen.dart';
 import 'games/happy_matching.dart';
@@ -23,26 +25,28 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'EmoBuddy',
+    return MultiProvider(                                    // ✅ ADD THIS
+      providers: [
+        ChangeNotifierProvider(create: (_) => ResultProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'EmoBuddy',
 
-      theme: ThemeData(
-        primaryColor: AppColors.primary,
-        fontFamily: 'Poppins',
-        scaffoldBackgroundColor: Colors.white,
+        theme: ThemeData(
+          primaryColor: AppColors.primary,
+          fontFamily: 'Poppins',
+          scaffoldBackgroundColor: Colors.white,
+        ),
+
+        home: Dashboard(),
+
+        routes: {
+          '/camera': (context) => CameraScreen(),
+          '/happy': (context) => HappyMatchingGame(),
+          '/angry': (context) => BalloonLearningGame(),
+        },
       ),
-
-      // 🚀 START SCREEN
-      home: Dashboard(),
-
-      // 🔥 ROUTES (VERY IMPORTANT)
-      routes: {
-        '/camera': (context) => CameraScreen(),
-
-        '/happy': (context) => HappyMatchingGame(),
-        '/angry': (context) => BalloonLearningGame(),
-      },
     );
   }
 }

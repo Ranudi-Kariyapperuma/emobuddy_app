@@ -23,7 +23,8 @@ CNN_FEATURE_EXTRACTOR_PATH = BASE / "cnn_feature_extractor.keras"
 XGBOOST_MODEL_PATH         = BASE / "xgboost_model.pkl"
 
 # ── image settings ─────────────────────────────────────────────────────────────
-IMG_SIZE = (224, 224)   # matches MobileNetV2 input
+CATEGORY_IMG_SIZE = (128, 128)   # category_classifier expects 128x128
+ASD_IMG_SIZE      = (128, 128)   # CNN & XGBoost models also expect 128x128
 
 # ── lazy-loaded model cache ────────────────────────────────────────────────────
 _cache: dict = {}
@@ -39,7 +40,6 @@ def _load_models() -> None:
 
     print("[model_utils] Loading category label encoder …")
     with open(CATEGORY_LABEL_ENC_PATH, "rb") as f:
-        import joblib
         _cache["label_encoder"] = joblib.load(f)
 
     print("[model_utils] Loading CNN ASD model …")
@@ -56,14 +56,14 @@ def _load_models() -> None:
 
 # ── helpers ────────────────────────────────────────────────────────────────────
 
-def preprocess_image(image: Image.Image) -> np.ndarray:
+def preprocess_image(image: Image.Image, size=(128, 128)) -> np.ndarray:
     """
-    Resize to IMG_SIZE, convert to RGB, normalise to [0, 1].
+    Resize to size, convert to RGB, normalise to [0, 1].
     Returns shape (1, H, W, 3).
     """
-    image = image.convert("RGB").resize(IMG_SIZE)
+    image = image.convert("RGB").resize(size)
     arr   = np.array(image, dtype=np.float32) / 255.0
-    return np.expand_dims(arr, axis=0)          # (1, 224, 224, 3)
+    return np.expand_dims(arr, axis=0)
 
 
 # ── public API ─────────────────────────────────────────────────────────────────
@@ -82,10 +82,10 @@ def classify_category(image: Image.Image) -> dict:
     """
     _load_models()
 
-    img    = preprocess_image(image)
-    probs  = _cache["category_model"].predict(img, verbose=0)[0]          # shape (3,)
+    img    = preprocess_image(image, size=CATEGORY_IMG_SIZE)
+    probs  = _cache["category_model"].predict(img, verbose=0)[0]
     le     = _cache["label_encoder"]
-    labels = list(le.classes_)                                             # ordered class names
+    labels = list(le.classes_)
 
     idx             = int(np.argmax(probs))
     predicted_label = labels[idx].lower()
@@ -113,9 +113,9 @@ def detect_asd_cnn(image: Image.Image) -> dict:
     """
     _load_models()
 
-    img       = preprocess_image(image)
-    raw_prob  = float(_cache["cnn_model"].predict(img, verbose=0)[0][0])
-    asd_prob  = round(raw_prob * 100, 2)
+    img      = preprocess_image(image, size=ASD_IMG_SIZE)
+    raw_prob = float(_cache["cnn_model"].predict(img, verbose=0)[0][0])
+    asd_prob = round(raw_prob * 100, 2)
 
     return {
         "asd_probability": asd_prob,
@@ -136,11 +136,10 @@ def detect_asd_xgboost(image: Image.Image) -> dict:
     """
     _load_models()
 
-    img      = preprocess_image(image)
-    features = _cache["cnn_feature_extractor"].predict(img, verbose=0)    # (1, feature_dim)
-    proba    = _cache["xgboost_model"].predict_proba(features)[0]         # [P(Non-ASD), P(ASD)]
+    img      = preprocess_image(image, size=ASD_IMG_SIZE)
+    features = _cache["cnn_feature_extractor"].predict(img, verbose=0)
+    proba    = _cache["xgboost_model"].predict_proba(features)[0]
 
-    # XGBoost classes are [0, 1]  →  index 1 = ASD
     asd_prob = round(float(proba[1]) * 100, 2)
 
     return {
@@ -161,13 +160,17 @@ def run_module1(image: Image.Image, expected_category: str) -> dict:
     Returns
     -------
     {
-        "category_match":   bool,
-        "expected":         str,
-        "detected":         str,
-        "category_confidence": float,
-        "cnn":              {"asd_probability": float, "prediction": str},
-        "xgboost":          {"asd_probability": float, "prediction": str},
-        "module1_asd_probability": float   ← average of CNN & XGBoost
+        "category_match":          bool,
+        "expected":                str,
+        "detected":                str,
+        "category_confidence":     float,
+        "all_category_scores":     dict,
+        "cnn":                     {"asd_probability": float, "prediction": str},
+        "xgboost":                 {"asd_probability": float, "prediction": str},
+        "module1_asd_probability": float,
+        "overall_probability":     float,
+        "asd_detected":            bool,
+        "severity":                str
     }
     If category mismatch, only category fields are populated.
     """
@@ -189,17 +192,30 @@ def run_module1(image: Image.Image, expected_category: str) -> dict:
             f"Image mismatch: you selected '{expected}' but the image appears to be '{detected}'. "
             f"Please upload the correct image type."
         )
+        base["asd_detected"]        = False
+        base["overall_probability"] = 0.0
+        base["severity"]            = "None"
         return base
 
     # Run ASD detectors
-    cnn_result  = detect_asd_cnn(image)
-    xgb_result  = detect_asd_xgboost(image)
+    cnn_result = detect_asd_cnn(image)
+    xgb_result = detect_asd_xgboost(image)
 
     avg_prob = round((cnn_result["asd_probability"] + xgb_result["asd_probability"]) / 2, 2)
+
+    severity = (
+        "Severe"   if avg_prob >= 80 else
+        "Moderate" if avg_prob >= 65 else
+        "Mild"     if avg_prob >= 50 else
+        "None"
+    )
 
     base.update({
         "cnn":                     cnn_result,
         "xgboost":                 xgb_result,
         "module1_asd_probability": avg_prob,
+        "overall_probability":     avg_prob,
+        "asd_detected":            avg_prob >= 50,
+        "severity":                severity,
     })
     return base

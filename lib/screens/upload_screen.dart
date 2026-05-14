@@ -156,7 +156,7 @@ class _UploadScreenState extends State<UploadScreen> {
 
                   // ───── IMAGE CARD ─────
                   Container(
-                    height: 300,
+                    height: 500,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius:
