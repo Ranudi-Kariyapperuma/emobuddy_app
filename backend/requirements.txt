@@ -1,13 +1,25 @@
-fastapi
-uvicorn
-tensorflow
-numpy
-pandas
-opencv-python
-pillow
-scikit-learn
-xgboost
-joblib
-python-multipart
-matplotlib
-seaborn
+# ── Web framework ──────────────────────────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9        # required by FastAPI for file uploads
+
+# ── Deep learning ──────────────────────────────────────────────────────────────
+tensorflow>=2.15.0             # includes Keras 3 / tf.keras
+# OR use the lighter CPU-only build on servers without a GPU:
+# tensorflow-cpu>=2.15.0
+
+# ── Classical ML ──────────────────────────────────────────────────────────────
+xgboost>=2.0.3
+scikit-learn>=1.4.2
+
+# ── Image processing ──────────────────────────────────────────────────────────
+opencv-python-headless>=4.9.0  # headless = no GUI dependency (server-safe)
+Pillow>=10.3.0
+
+# ── Data / numerics ──────────────────────────────────────────────────────────
+numpy>=1.26.4
+pandas>=2.2.2
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+joblib>=1.4.2                  # XGBoost model serialisation (used by scikit-learn / joblib)
+tqdm>=4.66.4
