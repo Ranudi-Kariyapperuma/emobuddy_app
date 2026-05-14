@@ -114,6 +114,9 @@ flutter:
      - assets/images/puzzel1.jpg
      - assets/images/puzzel2.jpg
      - assets/images/puzzel3.jpg
+     - assets/images/pandab.jpg
+     - assets/images/catpuzzel.jpg
+     - assets/images/mildbg.jpg
      - assets/sounds/A.wav
      - assets/sounds/B.wav
      - assets/sounds/C.wav
