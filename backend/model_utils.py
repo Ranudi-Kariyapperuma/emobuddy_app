@@ -39,7 +39,8 @@ def _load_models() -> None:
 
     print("[model_utils] Loading category label encoder …")
     with open(CATEGORY_LABEL_ENC_PATH, "rb") as f:
-        _cache["label_encoder"] = pickle.load(f)
+        import joblib
+        _cache["label_encoder"] = joblib.load(f)
 
     print("[model_utils] Loading CNN ASD model …")
     _cache["cnn_model"] = tf.keras.models.load_model(CNN_MODEL_PATH)

@@ -5,6 +5,7 @@ import 'package:emobuddy_app/games/wh_game_screen.dart';
 import 'package:emobuddy_app/screens/Mild_screen.dart';
 import 'package:emobuddy_app/screens/Moderate_screen.dart';
 import 'package:emobuddy_app/screens/Severe_screen.dart';
+import 'package:emobuddy_app/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'screens/splash_screen.dart';
 import 'screens/camera_screen.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // 🚀 START SCREEN
-      home: SplashScreen(),
+      home: Dashboard(),
 
       // 🔥 ROUTES (VERY IMPORTANT)
       routes: {
