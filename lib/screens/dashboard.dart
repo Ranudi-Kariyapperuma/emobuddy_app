@@ -14,10 +14,7 @@ class Dashboard extends StatelessWidget {
         children: [
           // 🌄 FULL BACKGROUND IMAGE
           Positioned.fill(
-            child: Image.asset(
-              "assets/images/dashbg.jpg",
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset("assets/images/dashbg.jpg", fit: BoxFit.cover),
           ),
 
           // 🌑 DARK OVERLAY
@@ -50,11 +47,11 @@ class Dashboard extends StatelessWidget {
                   // HEADER CARD
                   _buildHeaderCard(),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 45),
 
                   Expanded(child: _buildGrid(context)),
 
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 3),
 
                   _buildSummaryButton(context),
                 ],
@@ -89,14 +86,11 @@ class Dashboard extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 8),
+          SizedBox(height: 10),
 
           Text(
             "Upload drawings, handwriting, coloring, or face scan for analysis",
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 14,
-            ),
+            style: TextStyle(color: Colors.white70, fontSize: 14),
           ),
         ],
       ),
@@ -154,9 +148,7 @@ class Dashboard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (_) => UploadScreen(category: type),
-          ),
+          MaterialPageRoute(builder: (_) => UploadScreen(category: type)),
         );
       },
       borderRadius: BorderRadius.circular(22),
@@ -164,10 +156,7 @@ class Dashboard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),
           gradient: LinearGradient(
-            colors: [
-              color.withOpacity(0.9),
-              color.withOpacity(0.65),
-            ],
+            colors: [color.withOpacity(0.9), color.withOpacity(0.65)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -184,21 +173,19 @@ class Dashboard extends StatelessWidget {
           children: [
             // 🔥 LARGE ROUND ICON AREA
             Container(
-              padding: const EdgeInsets.all(18),
+              width: 90,
+              height: 90,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withOpacity(0.25),
-                border: Border.all(
-                  color: Colors.white54,
-                  width: 2,
-                ),
+                border: Border.all(color: Colors.white54, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 8,
+                  ),
+                ],
               ),
-              child: Image.asset(
-                image,
-                height: 60,
-                width: 60,
-                fit: BoxFit.contain,
-              ),
+              child: ClipOval(child: Image.asset(image, fit: BoxFit.cover)),
             ),
 
             const SizedBox(height: 16),
@@ -216,10 +203,7 @@ class Dashboard extends StatelessWidget {
 
             const Text(
               "Tap to start",
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 13,
-              ),
+              style: TextStyle(color: Colors.white70, fontSize: 13),
             ),
           ],
         ),
@@ -235,10 +219,7 @@ class Dashboard extends StatelessWidget {
         icon: const Icon(Icons.analytics, size: 24),
         label: const Text(
           "View Final Summary",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 31, 4, 4),
@@ -252,9 +233,7 @@ class Dashboard extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => const SummaryScreen(),
-            ),
+            MaterialPageRoute(builder: (_) => const SummaryScreen()),
           );
         },
       ),

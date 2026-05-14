@@ -1,7 +1,6 @@
-import 'package:emobuddy_app/screens/role_screen.dart';
+import 'package:emobuddy_app/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -33,12 +32,13 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-   
     Timer(Duration(seconds: 4), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => RoleSelectionScreen()),
-      );
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Dashboard()),
+        );
+      }
     });
   }
 
@@ -53,57 +53,59 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 254, 221, 170), // Ivory
-              Color.fromARGB(255, 236, 173, 212), // Nude
-              Color.fromARGB(255, 166, 234, 250), // Rose
-            ],
+          image: DecorationImage(
+            image: AssetImage('assets/images/dashbg.jpg'), // your background image
+            fit: BoxFit.cover,
           ),
         ),
-        child: Center(
-          child: FadeTransition(
-            opacity: _fadeAnimation,
-            child: ScaleTransition(
-              scale: _scaleAnimation,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Soft glowing icon
-                  Container(
-                    padding: EdgeInsets.all(25),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withOpacity(0.2),
+        child: Container(
+          // optional overlay for better text visibility
+          color: Colors.black.withOpacity(0.2),
+          child: Center(
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: ScaleTransition(
+                scale: _scaleAnimation,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Logo container
+                    Container(
+                      padding: EdgeInsets.all(25),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.2),
+                      ),
+                      child: Image.asset(
+                        'assets/emologo.png',
+                        width: 250,
+                        height: 250,
+                      ),
                     ),
-                    child: Image.asset(
-                      'assets/emologo.png',
-                      width: 250,
-                      height: 250,
-                    ),
-                  ),
-                  SizedBox(height: 25),
-                  Text(
-                    "Welcome To EmoBuddy",
-                    style: GoogleFonts.fredoka(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 68, 30, 12),
-                      letterSpacing: 1.2,
-                    ),
-                  ),
 
-                  SizedBox(height: 10),
-                  Text(
-                    "Your Safe Space Buddy ",
-                    style: GoogleFonts.fredoka(
-                      fontSize: 18,
-                      color: Color.fromARGB(255, 57, 22, 22),
+                    SizedBox(height: 25),
+
+                    Text(
+                      "Welcome To EmoBuddy",
+                      style: GoogleFonts.fredoka(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
+                        color: const Color.fromARGB(255, 35, 6, 6),
+                        letterSpacing: 1.2,
+                      ),
                     ),
-                  ),
-                ],
+
+                    SizedBox(height: 10),
+
+                    Text(
+                      "Your Safe Space Buddy",
+                      style: GoogleFonts.fredoka(
+                        fontSize: 18,
+                        color: const Color.fromARGB(179, 31, 15, 2),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

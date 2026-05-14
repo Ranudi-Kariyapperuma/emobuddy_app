@@ -73,14 +73,33 @@ class SummaryScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.4),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.white,
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ),
 
-                      const Text(
-                        "Summary Dashboard",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                        ),
+                          const SizedBox(width: 10),
+
+                          const Text(
+                            "Summary Dashboard",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
 
                       const SizedBox(height: 20),
@@ -128,8 +147,7 @@ class SummaryScreen extends StatelessWidget {
 
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    _severityColor(severity),
+                                backgroundColor: _severityColor(severity),
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 12,
@@ -139,9 +157,7 @@ class SummaryScreen extends StatelessWidget {
                                   _navigateBySeverity(context, severity),
                               child: Text(
                                 severity.toUpperCase(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                ),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                           ],
@@ -187,13 +203,8 @@ class SummaryScreen extends StatelessWidget {
     return Card(
       color: Colors.white.withOpacity(0.92),
       elevation: 6,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: child,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Padding(padding: const EdgeInsets.all(16), child: child),
     );
   }
 }

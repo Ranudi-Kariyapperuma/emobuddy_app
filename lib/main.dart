@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
 
-        home: Dashboard(),
+        home: SplashScreen(),
 
         routes: {
           '/camera': (context) => CameraScreen(),
