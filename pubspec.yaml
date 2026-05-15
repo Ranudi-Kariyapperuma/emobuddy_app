@@ -130,6 +130,11 @@ flutter:
      - assets/images/handimg.jpg
      - assets/images/colorimg.jpg
      - assets/images/prof.jpg
+     - assets/images/jungle.jpg
+     - assets/images/ocean.jpg
+     - assets/images/volcano.jpg
+     - assets/images/galaxy.jpg
+     - assets/images/snow.jpg
      - assets/sounds/A.wav
      - assets/sounds/B.wav
      - assets/sounds/C.wav

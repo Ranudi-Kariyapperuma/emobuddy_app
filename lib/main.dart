@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
 
-        home: SplashScreen(),
+        home: HappyMatchingGame(),
 
         routes: {
           '/camera': (context) => CameraScreen(),
