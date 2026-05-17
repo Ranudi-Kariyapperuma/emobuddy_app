@@ -10,10 +10,13 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool asdDetected = result['asd_detected'] ?? false;
-    final double overallProb = (result['overall_probability'] ?? 0).toDouble();
+    // Works for both facial and activity responses
+    final double overallProb =
+        (result['overall_probability'] ?? result['asd_probability'] ?? 0)
+            .toDouble();
+    final bool asdDetected = result['asd_detected'] ?? (overallProb >= 50);
     final String severity = result['severity'] ?? 'None';
-    final bool categoryMatch = result['category_match'] ?? false;
+    final bool categoryMatch = result['category_match'] ?? true;
     final String message = result['message'] ?? '';
 
     return Scaffold(

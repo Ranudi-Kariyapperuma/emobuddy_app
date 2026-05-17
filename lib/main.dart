@@ -1,14 +1,6 @@
-import 'package:emobuddy_app/games/fruitvegisort.dart';
-import 'package:emobuddy_app/games/puzzel.dart';
-import 'package:emobuddy_app/games/routing_screen.dart';
-import 'package:emobuddy_app/games/wh_game_screen.dart';
-import 'package:emobuddy_app/screens/Mild_screen.dart';
-import 'package:emobuddy_app/screens/Moderate_screen.dart';
-import 'package:emobuddy_app/screens/Severe_screen.dart';
-import 'package:emobuddy_app/screens/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';                    // ✅ ADD THIS
-import 'package:emobuddy_app/providers/result_provider.dart'; // ✅ ADD THIS
+import 'package:provider/provider.dart';                   
+import 'package:emobuddy_app/providers/result_provider.dart'; 
 import 'screens/splash_screen.dart';
 import 'screens/camera_screen.dart';
 import 'games/happy_matching.dart';
@@ -25,7 +17,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(                                    // ✅ ADD THIS
+    return MultiProvider(                                   
       providers: [
         ChangeNotifierProvider(create: (_) => ResultProvider()),
       ],
