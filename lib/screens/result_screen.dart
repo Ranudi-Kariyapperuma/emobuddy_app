@@ -15,7 +15,6 @@ class ResultScreen extends StatelessWidget {
         (result['overall_probability'] ?? result['asd_probability'] ?? 0)
             .toDouble();
     final bool asdDetected = result['asd_detected'] ?? (overallProb >= 50);
-    final String severity = result['severity'] ?? 'None';
     final bool categoryMatch = result['category_match'] ?? true;
     final String message = result['message'] ?? '';
 
@@ -104,10 +103,7 @@ class ResultScreen extends StatelessWidget {
                             const SizedBox(width: 40), // keeps balance
                           ],
                         ),
-                        Text(
-                          "Severity: $severity",
-                          style: const TextStyle(color: Colors.white70),
-                        ),
+                       
                       ],
                     ),
                   ),
