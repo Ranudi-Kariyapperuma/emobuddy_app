@@ -5,6 +5,7 @@ Module 2: Facial ASD Detection using MobileNetV2
 
 import numpy as np
 import pickle
+import cv2
 from pathlib import Path
 from PIL import Image
 # pylint: disable=no-member
@@ -35,14 +36,39 @@ def _load_models() -> None:
     with open(FACIAL_METADATA_PATH, "rb") as f:
         _cache["metadata"] = pickle.load(f)
 
+    # ✅ FIXED: correct key, stricter threshold
     _cache["threshold"] = _cache["metadata"].get("threshold", 0.65)
     print(f"[facial_model_utils] Facial model loaded ✓  (threshold={_cache['threshold']})")
 
 
+def crop_face(image: Image.Image) -> Image.Image:
+    """Detect and crop face region to remove background noise."""
+    img_cv = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    detector = cv2.CascadeClassifier(
+        cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+    )
+    faces = detector.detectMultiScale(img_cv, scaleFactor=1.1, minNeighbors=5)
+
+    if len(faces) > 0:
+        x, y, w, h = faces[0]
+        # Add 20% padding around face
+        pad = int(0.2 * w)
+        x = max(0, x - pad)
+        y = max(0, y - pad)
+        w = min(image.width - x, w + 2 * pad)
+        h = min(image.height - y, h + 2 * pad)
+        print(f"[DEBUG] Face detected and cropped at x={x} y={y} w={w} h={h}")
+        return image.crop((x, y, x + w, y + h))
+
+    print("[DEBUG] No face detected — using full image")
+    return image  # fallback: use full image if no face found
+
+
 def preprocess_face(image: Image.Image) -> np.ndarray:
+    image = crop_face(image)                        # ✅ crop face first
     image = image.convert("RGB").resize(IMG_SIZE)
     arr   = np.array(image, dtype=np.float32)
-    arr   = preprocess_input(arr)          # ✅ scales to [-1, 1] like training
+    arr   = preprocess_input(arr)
     return np.expand_dims(arr, axis=0)
 
 
@@ -53,8 +79,8 @@ def detect_asd_facial(image: Image.Image) -> dict:
     raw_prob  = float(_cache["facial_model"].predict(img, verbose=0)[0][0])
     threshold = _cache["threshold"]
 
-    # raw_prob = P(non_autistic) because non_autistic=1
-    # so flip it to get P(autistic)
+    # raw_prob = P(non_autistic) because class_indices = {autistic:0, non_autistic:1}
+    # flip to get P(autistic)
     asd_prob   = round((1 - raw_prob) * 100, 2)
     prediction = "ASD" if raw_prob < threshold else "Non-ASD"
 
