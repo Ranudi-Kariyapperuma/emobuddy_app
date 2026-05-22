@@ -11,55 +11,87 @@ class Dashboard extends StatelessWidget {
       backgroundColor: Colors.transparent,
 
       body: Stack(
-        children: [
-          // 🌄 FULL BACKGROUND IMAGE
-          Positioned.fill(
-            child: Image.asset("assets/images/dashbg.jpg", fit: BoxFit.cover),
-          ),
+  children: [
+    Positioned.fill(
+      child: Image.asset("assets/images/dashbg.jpg", fit: BoxFit.cover),
+    ),
 
-          // 🌑 DARK OVERLAY
-          Positioned.fill(
-            child: Container(
-              color: const Color.fromARGB(255, 62, 51, 51).withOpacity(0.55),
+    Positioned.fill(
+      child: Container(
+        color: const Color.fromARGB(255, 62, 51, 51).withOpacity(0.55),
+      ),
+    ),
+
+    SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            const Text(
+              "EmoBuddy Dashboard",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color.fromARGB(255, 50, 8, 12),
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
 
-          // 📱 CONTENT
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
+            const SizedBox(height: 20),
+
+            _buildHeaderCard(),
+
+            const SizedBox(height: 20),
+
+            // ✅ IMPORTANT FIX HERE
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 16,
+                childAspectRatio: 0.85, // 🔥 important fix
                 children: [
-                  // 🔥 ASD TITLE
-                  const Text(
-                    "EmoBuddy Dashboard",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 50, 8, 12),
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
-                    ),
+                  _buildCard(
+                    context,
+                    title: "Coloring",
+                    image: "assets/images/colorimg.jpg",
+                    color: Colors.purple,
+                    type: "coloring",
                   ),
-
-                  const SizedBox(height: 30),
-
-                  // HEADER CARD
-                  _buildHeaderCard(),
-
-                  const SizedBox(height: 45),
-
-                  Expanded(child: _buildGrid(context)),
-
-                  const SizedBox(height: 3),
-
-                  _buildSummaryButton(context),
+                  _buildCard(
+                    context,
+                    title: "Drawing",
+                    image: "assets/images/drawimg.jpg",
+                    color: Colors.orange,
+                    type: "drawing",
+                  ),
+                  _buildCard(
+                    context,
+                    title: "Handwriting",
+                    image: "assets/images/handimg.jpg",
+                    color: Colors.green,
+                    type: "handwriting",
+                  ),
+                  _buildCard(
+                    context,
+                    title: "Face Scan",
+                    image: "assets/images/faceimg.jpg",
+                    color: Colors.blue,
+                    type: "face",
+                  ),
                 ],
               ),
             ),
-          ),
-        ],
+
+            const SizedBox(height: 10),
+
+            _buildSummaryButton(context),
+          ],
+        ),
       ),
+    ),
+  ],
+),
     );
   }
 

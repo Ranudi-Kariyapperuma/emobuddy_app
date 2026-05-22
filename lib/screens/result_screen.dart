@@ -12,9 +12,10 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Works for both facial and activity responses
     final double overallProb =
-        (result['overall_probability'] ?? result['asd_probability'] ?? 0)
+        (result['asd_probability'] ?? result['module2_asd_probability'] ?? 0)
             .toDouble();
-    final bool asdDetected = result['asd_detected'] ?? (overallProb >= 50);
+    final bool asdDetected = result['prediction'] == 'ASD';
+    final String confidenceLabel = result['confidence_label'] ?? '';
     final bool categoryMatch = result['category_match'] ?? true;
     final String message = result['message'] ?? '';
 
@@ -103,7 +104,6 @@ class ResultScreen extends StatelessWidget {
                             const SizedBox(width: 40), // keeps balance
                           ],
                         ),
-                       
                       ],
                     ),
                   ),
@@ -133,23 +133,11 @@ class ResultScreen extends StatelessWidget {
                           "Overall Probability",
                           "${overallProb.toStringAsFixed(1)}%",
                         ),
-
                         const SizedBox(height: 8),
-
-                        if (result['cnn'] != null) ...[
-                          _infoRow(
-                            "CNN",
-                            "${result['cnn']['asd_probability']}% - ${result['cnn']['prediction']}",
-                          ),
-                        ],
-
+                        _infoRow("Prediction", result['prediction'] ?? 'N/A'),
                         const SizedBox(height: 8),
-
-                        if (result['xgboost'] != null) ...[
-                          _infoRow(
-                            "XGBoost",
-                            "${result['xgboost']['asd_probability']}% - ${result['xgboost']['prediction']}",
-                          ),
+                        if (confidenceLabel.isNotEmpty) ...[
+                          _infoRow("Confidence", confidenceLabel),
                         ],
                       ],
                     ),

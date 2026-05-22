@@ -35,7 +35,7 @@ def _load_models() -> None:
     with open(FACIAL_METADATA_PATH, "rb") as f:
         _cache["metadata"] = pickle.load(f)
 
-    _cache["threshold"] = _cache["metadata"].get("best_threshold", 0.5)
+    _cache["threshold"] = _cache["metadata"].get("threshold", 0.65)
     print(f"[facial_model_utils] Facial model loaded ✓  (threshold={_cache['threshold']})")
 
 
@@ -56,7 +56,7 @@ def detect_asd_facial(image: Image.Image) -> dict:
     # raw_prob = P(non_autistic) because non_autistic=1
     # so flip it to get P(autistic)
     asd_prob   = round((1 - raw_prob) * 100, 2)
-    prediction = "ASD" if (1 - raw_prob) >= threshold else "Non-ASD"
+    prediction = "ASD" if raw_prob < threshold else "Non-ASD"
 
     print(f"[DEBUG] raw_prob={raw_prob:.4f}  asd_prob={asd_prob}%  prediction={prediction}")
 

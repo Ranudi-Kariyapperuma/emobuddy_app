@@ -27,7 +27,11 @@ class _UploadScreenState extends State<UploadScreen> {
 
   // ───────────────── PICK IMAGE ─────────────────
   Future<void> pick(ImageSource source) async {
-    final picked = await picker.pickImage(source: source);
+  final picked = await picker.pickImage(
+    source: source,
+    imageQuality: 70,  // ← add this
+    maxWidth: 1024,    // ← add this
+  );
 
     if (picked != null) {
       setState(() => image = File(picked.path));
@@ -38,9 +42,7 @@ class _UploadScreenState extends State<UploadScreen> {
   Future<void> analyze() async {
     if (image == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please select an image first"),
-        ),
+        const SnackBar(content: Text("Please select an image first")),
       );
       return;
     }
@@ -52,6 +54,9 @@ class _UploadScreenState extends State<UploadScreen> {
 
       if (widget.category == "face") {
         res = await ApiService.uploadFace(image!);
+
+        debugPrint("=== API RESPONSE ===");
+res.forEach((key, value) => debugPrint("$key: $value"));
       } else {
         res = await ApiService.uploadActivity(
           image!,
@@ -59,15 +64,10 @@ class _UploadScreenState extends State<UploadScreen> {
         );
       }
 
-      final model = ResultModel.fromJson(
-        widget.category,
-        res,
-      );
+      final model = ResultModel.fromJson(widget.category, res);
 
-      Provider.of<ResultProvider>(
-        context,
-        listen: false,
-      ).addResult(model);
+      Provider.of<ResultProvider>(context, listen: false)
+          .addResult(model);
 
       setState(() => loading = false);
 
@@ -98,171 +98,153 @@ class _UploadScreenState extends State<UploadScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // ───── BACKGROUND IMAGE ─────
+          // BACKGROUND
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(
-                  "assets/images/dashbg.jpg",
-                ),
+                image: AssetImage("assets/images/dashbg.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
           ),
 
-          // ───── DARK OVERLAY ─────
+          // DARK OVERLAY
           Container(
             color: Colors.black.withOpacity(0.45),
           ),
 
-          // ───── MAIN CONTENT ─────
+          // MAIN CONTENT
           SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  // ───── APP BAR ─────
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius:
-                              BorderRadius.circular(12),
-                        ),
-                        child: IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: const Icon(
-                            Icons.arrow_back_ios_new,
-                            color: Colors.white,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    // APP BAR
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
+                        const Spacer(),
+                        Text(
+                          "${widget.category.toUpperCase()} DETECTION",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+
+                    const SizedBox(height: 30),
+
+                    // IMAGE CARD (FIXED)
+                    Container(
+                      constraints: const BoxConstraints(
+                        minHeight: 250,
+                        maxHeight: 420,
                       ),
-                      const Spacer(),
-                      Text(
-                        "${widget.category.toUpperCase()} DETECTION",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.black.withOpacity(0.12),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.3),
                         ),
                       ),
-                      const Spacer(),
-                    ],
-                  ),
+                      child: image == null
+                          ? const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image_outlined,
+                                  size: 80,
+                                  color: Colors.white70,
+                                ),
+                                SizedBox(height: 12),
+                                Text(
+                                  "No Image Selected",
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Image.file(
+                                image!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                    ),
 
-                  const SizedBox(height: 40),
+                    const SizedBox(height: 30),
 
-                  // ───── IMAGE CARD ─────
-                  Container(
-                    height: 500,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(25),
-                      color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.12),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.3),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 6),
+                    // BUTTONS
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildButton(
+                          icon: Icons.photo_library_rounded,
+                          label: "Gallery",
+                          onTap: () => pick(ImageSource.gallery),
+                        ),
+                        _buildButton(
+                          icon: Icons.camera_alt_rounded,
+                          label: "Camera",
+                          onTap: () => pick(ImageSource.camera),
                         ),
                       ],
                     ),
-                    child: image == null
-                        ? Column(
-                            mainAxisAlignment:
-                                MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.image_outlined,
-                                size: 80,
-                                color: Color.fromARGB(179, 4, 2, 2),
-                              ),
-                              SizedBox(height: 12),
-                              Text(
-                                "No Image Selected",
+
+                    const SizedBox(height: 30),
+
+                    // ANALYZE BUTTON
+                    SizedBox(
+                      width: double.infinity,
+                      height: 58,
+                      child: ElevatedButton(
+                        onPressed: loading ? null : analyze,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 7, 39, 99),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                        ),
+                        child: loading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                "Analyze Image",
                                 style: TextStyle(
-                                  color: Colors.white70,
                                   fontSize: 18,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ],
-                          )
-                        : ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular(25),
-                            child: Image.file(
-                              image!,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                  ),
-
-                  const SizedBox(height: 40),
-
-                  // ───── BUTTONS ─────
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildButton(
-                        icon: Icons.photo_library_rounded,
-                        label: "Gallery",
-                        onTap: () =>
-                            pick(ImageSource.gallery),
                       ),
-                      _buildButton(
-                        icon: Icons.camera_alt_rounded,
-                        label: "Camera",
-                        onTap: () =>
-                            pick(ImageSource.camera),
-                      ),
-                    ],
-                  ),
-
-                  const Spacer(),
-
-                  // ───── ANALYZE BUTTON ─────
-                  SizedBox(
-                    width: double.infinity,
-                    height: 58,
-                    child: ElevatedButton(
-                      onPressed: loading ? null : analyze,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 7, 39, 99),
-                        elevation: 10,
-                        shadowColor:
-                            Colors.blue.withOpacity(0.5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(18),
-                        ),
-                      ),
-                      child: loading
-                          ? const CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                          : const Text(
-                              "Analyze Image",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight:
-                                    FontWeight.bold,
-                                letterSpacing: 1,
-                              ),
-                            ),
                     ),
-                  ),
 
-                  const SizedBox(height: 20),
-                ],
+                    const SizedBox(height: 40),
+                  ],
+                ),
               ),
             ),
           ),
@@ -271,7 +253,7 @@ class _UploadScreenState extends State<UploadScreen> {
     );
   }
 
-  // ───────────────── CUSTOM BUTTON ─────────────────
+  // ───────────────── BUTTON WIDGET ─────────────────
   Widget _buildButton({
     required IconData icon,
     required String label,
@@ -293,10 +275,7 @@ class _UploadScreenState extends State<UploadScreen> {
         ),
         child: Row(
           children: [
-            Icon(
-              icon,
-              color: Colors.white,
-            ),
+            Icon(icon, color: Colors.white),
             const SizedBox(width: 10),
             Text(
               label,
