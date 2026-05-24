@@ -1,13 +1,13 @@
 """
 combined_result.py
 Combines Module-1 (drawing/coloring/handwriting) and Module-2 (facial)
-ASD probabilities into a final decision with severity level and game recommendations.
+ASD categorized into a final decision with severity level and game recommendations.
 """
 
 from __future__ import annotations
 
 # ── Weights ────────────────────────────────────────────────────────────────────
-# Module-1 (activity images): CNN + XGBoost averaged → weighted 60 %
+# Module-1 (activity images) - CNN + XGBoost averaged → weighted 60 %
 # Module-2 (facial):                                  → weighted 40 %
 WEIGHT_MODULE1 = 0.60
 WEIGHT_MODULE2 = 0.40

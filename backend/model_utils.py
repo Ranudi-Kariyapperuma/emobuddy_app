@@ -172,7 +172,7 @@ def run_module1(image: Image.Image, expected_category: str) -> dict:
         "asd_detected":            bool,
         "severity":                str
     }
-    If category mismatch, only category fields are populated.
+    Category mismatch is flagged as a warning but ASD detection still runs.
     """
     cat_result = classify_category(image)
     detected   = cat_result["predicted_label"]
@@ -187,17 +187,14 @@ def run_module1(image: Image.Image, expected_category: str) -> dict:
         "all_category_scores": cat_result["all_scores"],
     }
 
+    # ── CHANGED: Add mismatch warning but DO NOT return early ──────────────────
     if not match:
         base["message"] = (
-            f"Image mismatch: you selected '{expected}' but the image appears to be '{detected}'. "
-            f"Please upload the correct image type."
+            f"Category note: you selected '{expected}' but image appears to be '{detected}'. "
+            f"ASD detection still performed."
         )
-        base["asd_detected"]        = False
-        base["overall_probability"] = 0.0
-        base["severity"]            = "None"
-        return base
 
-    # Run ASD detectors
+    # ── Always run ASD detectors ───────────────────────────────────────────────
     cnn_result = detect_asd_cnn(image)
     xgb_result = detect_asd_xgboost(image)
 

@@ -10,26 +10,54 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Works for both facial and activity responses
-    final double overallProb =
-        (result['asd_probability'] ?? result['module2_asd_probability'] ?? 0)
+    // ── Detect which module's response this is ──────────────────────────────
+    final bool isFacial = result.containsKey('confidence_label');
+
+    // ── Facial fields ───────────────────────────────────────────────────────
+    final double facialProb =
+        ((result['asd_probability'] ?? result['module2_asd_probability'] ?? 0))
             .toDouble();
-    final bool asdDetected = result['prediction'] == 'ASD';
     final String confidenceLabel = result['confidence_label'] ?? '';
+
+    // ── Activity fields ─────────────────────────────────────────────────────
+    final double activityProb =
+        ((result['overall_probability'] ?? result['module1_asd_probability'] ?? 0))
+            .toDouble();
+
+    final Map<String, dynamic>? cnn =
+        result['cnn'] as Map<String, dynamic>?;
+    final Map<String, dynamic>? xgboost =
+        result['xgboost'] as Map<String, dynamic>?;
+
+    final double cnnProb = cnn != null
+        ? (cnn['asd_probability'] ?? 0).toDouble()
+        : 0;
+    final String cnnPrediction = cnn?['prediction'] ?? 'N/A';
+
+    final double xgbProb = xgboost != null
+        ? (xgboost['asd_probability'] ?? 0).toDouble()
+        : 0;
+    final String xgbPrediction = xgboost?['prediction'] ?? 'N/A';
+
+    // ── Shared ──────────────────────────────────────────────────────────────
+    final double overallProb = isFacial ? facialProb : activityProb;
+    final bool asdDetected = isFacial
+        ? result['prediction'] == 'ASD'
+        : (result['asd_detected'] ?? false);
+ 
+
     final bool categoryMatch = result['category_match'] ?? true;
     final String message = result['message'] ?? '';
 
     return Scaffold(
       body: Stack(
         children: [
-          // 🌄 Background Image
           SizedBox.expand(
             child: Image.asset(
-              "assets/images/dashbg.jpg", // <-- replace with your background image
+              "assets/images/dashbg.jpg",
               fit: BoxFit.cover,
             ),
           ),
-
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -42,12 +70,12 @@ class ResultScreen extends StatelessWidget {
               ),
             ),
           ),
-
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
+                  // ── Image + Status ────────────────────────────────────────
                   _glassCard(
                     child: Column(
                       children: [
@@ -61,10 +89,8 @@ class ResultScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 12),
-
                         Row(
                           children: [
-                            // 🔙 Back button
                             GestureDetector(
                               onTap: () => Navigator.pop(context),
                               child: Container(
@@ -81,27 +107,28 @@ class ResultScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-
                             const SizedBox(width: 12),
-
-                            // 🧠 Status Text
                             Expanded(
-                              child: Text(
-                                asdDetected
-                                    ? "ASD Detected"
-                                    : "No ASD Detected",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 29,
-                                  fontWeight: FontWeight.bold,
-                                  color: asdDetected
-                                      ? Colors.red
-                                      : const Color.fromARGB(255, 20, 102, 22),
-                                ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    asdDetected
+                                        ? "ASD Detected"
+                                        : "No ASD Detected",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 29,
+                                      fontWeight: FontWeight.bold,
+                                      color: asdDetected
+                                          ? Colors.red
+                                          : const Color.fromARGB(255, 20, 102, 22),
+                                    ),
+                                  ),
+                      
+                                ],
                               ),
                             ),
-
-                            const SizedBox(width: 40), // keeps balance
+                            const SizedBox(width: 40),
                           ],
                         ),
                       ],
@@ -110,7 +137,8 @@ class ResultScreen extends StatelessWidget {
 
                   const SizedBox(height: 16),
 
-                  if (!categoryMatch)
+                  // ── Category mismatch warning ─────────────────────────────
+                  if (!categoryMatch && message.isNotEmpty)
                     _glassCard(
                       color: Colors.orange.withOpacity(0.15),
                       child: Text(
@@ -122,6 +150,7 @@ class ResultScreen extends StatelessWidget {
 
                   const SizedBox(height: 16),
 
+                  // ── AI Analysis Results ───────────────────────────────────
                   _glassCard(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,11 +162,32 @@ class ResultScreen extends StatelessWidget {
                           "Overall Probability",
                           "${overallProb.toStringAsFixed(1)}%",
                         ),
-                        const SizedBox(height: 8),
-                        _infoRow("Prediction", result['prediction'] ?? 'N/A'),
-                        const SizedBox(height: 8),
-                        if (confidenceLabel.isNotEmpty) ...[
-                          _infoRow("Confidence", confidenceLabel),
+
+                        // ── FACIAL result rows ──────────────────────────────
+                        if (isFacial) ...[
+                          const SizedBox(height: 8),
+                          _infoRow(
+                            "Prediction",
+                            result['prediction'] ?? 'N/A',
+                          ),
+                          if (confidenceLabel.isNotEmpty) ...[
+                            const SizedBox(height: 8),
+                            _infoRow("Confidence", confidenceLabel),
+                          ],
+                        ],
+
+                        // ── ACTIVITY result rows (CNN + XGBoost) ────────────
+                        if (!isFacial) ...[
+                          const SizedBox(height: 8),
+                          _infoRow(
+                            "CNN",
+                            "${cnnProb.toStringAsFixed(2)}% - $cnnPrediction",
+                          ),
+                          const SizedBox(height: 8),
+                          _infoRow(
+                            "XGBoost",
+                            "${xgbProb.toStringAsFixed(2)}% - $xgbPrediction",
+                          ),
                         ],
                       ],
                     ),
@@ -151,7 +201,6 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
-  // 🎨 Glass Card Widget
   Widget _glassCard({required Widget child, Color? color}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
