@@ -1,6 +1,6 @@
-# emobuddy_app
+<img width="1920" height="480" alt="Image" src="https://github.com/user-attachments/assets/693cfbae-e5e2-4127-827d-310bbf19f4e3" />
 
-<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/bd7bff9c-1717-434d-bc66-7919babb3de6" />
+# emobuddy_app
 
 A new Flutter project.
 
