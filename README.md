@@ -26,7 +26,13 @@
 
 <br><br>
 
-Handwriting • Coloring • Drawing • Facial Recognition
+<br>
+
+<img src="https://img.shields.io/badge/📝_Handwriting-Analysis-blue?style=for-the-badge" />
+<img src="https://img.shields.io/badge/🎨_Coloring-Emotion_Expression-green?style=for-the-badge" />
+<img src="https://img.shields.io/badge/✏️_Drawing-Creativity_Recognition-orange?style=for-the-badge" />
+<img src="https://img.shields.io/badge/👁️_Facial_Recognition-ASD_Detection-red?style=for-the-badge" />
+
 
 <br>
 
