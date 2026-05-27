@@ -15,7 +15,7 @@
 <img src="https://github.com/user-attachments/assets/36e3eca8-0d36-40dc-a1dc-1dc812cd7e73" width="90%" />
 
 
-<br>
+<br><br>
 
 <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python" />
 <img src="https://img.shields.io/badge/TensorFlow-DeepLearning-orange?style=for-the-badge&logo=tensorflow" />
@@ -24,7 +24,7 @@
 <img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi" />
 <img src="https://img.shields.io/badge/TFLite-MobileDeployment-7B1FA2?style=for-the-badge" />
 
-<br><br>
+<br>
 
 <br>
 
