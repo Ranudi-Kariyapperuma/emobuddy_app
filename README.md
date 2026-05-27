@@ -92,13 +92,18 @@ Adaptive Game Recommendation
 
 # Module 01 — Activity-Based ASD Detection
 
-This module analyzes:
+Dataset 1 – Thesis Dataset (Activity-Based Dataset)
 
-- Handwriting
-- Coloring
-- Drawing
+This module analyzes user-uploaded activity-based images, including:
 
-images uploaded by users.
+Handwriting
+Coloring
+Drawing
+
+Dataset Link:
+https://www.kaggle.com/datasets/imranliaqat32/autism-spectrum-disorder-in-childrenhandgestures
+
+The dataset is used to support activity-based ASD feature analysis and model training.
 
 ---
 
@@ -192,7 +197,13 @@ If a user uploads the wrong image type, the system automatically detects the mis
 
 # Module 02 — Facial ASD Detection
 
-This module uses facial recognition to identify ASD-related facial characteristics.
+This module uses facial recognition to identify ASD-related facial characteristics in children.
+The dataset was created by merging two publicly available Kaggle datasets:
+
+https://www.kaggle.com/datasets/prayashdas/autistic-children-facial-image-dataset
+https://www.kaggle.com/datasets/meimeizhong/facial-dataset-of-autistic-children
+
+After merging, the dataset was cleaned and organized to ensure consistency and class balance.
 
 ---
 
@@ -303,19 +314,7 @@ using a weighted average fusion mechanism.
 
 # Technologies Used
 
-| Technology | Purpose |
-|---|---|
-| Python 3.x | Core Programming |
-| TensorFlow / Keras | Deep Learning |
-| MobileNetV2 | Transfer Learning |
-| XGBoost | Machine Learning |
-| Flutter | Mobile Development |
-| FastAPI | Backend Development |
-| OpenCV | Image Processing |
-| NumPy | Numerical Operations |
-| Scikit-learn | ML Utilities |
-| Matplotlib | Visualization |
-
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/5e57ae4f-1117-466c-8aa7-348295042d01" />
 ---
 
 # Saved Models
