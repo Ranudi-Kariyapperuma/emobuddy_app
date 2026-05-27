@@ -2,13 +2,13 @@
 
 <img src="https://github.com/user-attachments/assets/693cfbae-e5e2-4127-827d-310bbf19f4e3" width="100%" />
 
-<br><br>
+<br>
 
 # Multimodal AI-Assisted Adaptive Learning Companion for Children with Autism
 
 <img src="https://github.com/user-attachments/assets/36e3eca8-0d36-40dc-a1dc-1dc812cd7e73" width="90%" />
 
-<br><br>
+<br>
 
 ## EMO BUDDY APP
 
