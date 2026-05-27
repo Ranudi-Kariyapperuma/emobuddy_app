@@ -17,24 +17,23 @@
 
 <br><br>
 
-<img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python" />
-<img src="https://img.shields.io/badge/TensorFlow-DeepLearning-orange?style=for-the-badge&logo=tensorflow" />
-<img src="https://img.shields.io/badge/XGBoost-MachineLearning-red?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Flutter-Mobile_App-02569B?style=for-the-badge&logo=flutter" />
-<img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi" />
-<img src="https://img.shields.io/badge/TFLite-MobileDeployment-7B1FA2?style=for-the-badge" />
+<!-- TECH STACK -->
+<img src="https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+<img src="https://img.shields.io/badge/TensorFlow-Deep_Learning-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" />
+<img src="https://img.shields.io/badge/XGBoost-ML_Model-EC1C24?style=for-the-badge&logo=lightgbm&logoColor=white" />
+<img src="https://img.shields.io/badge/Flutter-Mobile_App-02569B?style=for-the-badge&logo=flutter&logoColor=white" />
+<img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+<img src="https://img.shields.io/badge/TFLite-Edge_AI-7B1FA2?style=for-the-badge&logo=tensorflow&logoColor=white" />
 
-<br>
+<br><br>
 
-<br>
+<!-- FEATURE MODULES (DIFFERENT STYLE + COLORS + ICON LOGIC) -->
+<img src="https://img.shields.io/badge/✍️_Handwriting_Recognition-Pen_Stroke_AI-4A90E2?style=for-the-badge&logo=google-docs&logoColor=white" />
+<img src="https://img.shields.io/badge/🎨_Coloring_Analysis-Emotion_Insight-2ECC71?style=for-the-badge&logo=adobe-photoshop&logoColor=white" />
+<img src="https://img.shields.io/badge/🧠_Drawing_Intelligence-Creative_Pattern_AI-F39C12?style=for-the-badge&logo=figma&logoColor=white" />
+<img src="https://img.shields.io/badge/👁️_Facial_ASD_Detection-Vision_AI-8E44AD?style=for-the-badge&logo=opencv&logoColor=white" />
 
-<img src="https://img.shields.io/badge/📝_Handwriting-Analysis-blue?style=for-the-badge" />
-<img src="https://img.shields.io/badge/🎨_Coloring-Emotion_Expression-green?style=for-the-badge" />
-<img src="https://img.shields.io/badge/✏️_Drawing-Creativity_Recognition-orange?style=for-the-badge" />
-<img src="https://img.shields.io/badge/👁️_Facial_Recognition-ASD_Detection-red?style=for-the-badge" />
-
-
-<br>
+<br><br>
 
 ## Demo Video
 
