@@ -28,11 +28,10 @@
 <br><br>
 
 <!-- FEATURE MODULES (DIFFERENT STYLE + COLORS + ICON LOGIC) -->
-<img src="https://img.shields.io/badge/✍️_Handwriting_Recognition-Pen_Stroke_AI-4A90E2?style=for-the-badge&logo=google-docs&logoColor=white" />
-<img src="https://img.shields.io/badge/🎨_Coloring_Analysis-Emotion_Insight-2ECC71?style=for-the-badge&logo=adobe-photoshop&logoColor=white" />
-<img src="https://img.shields.io/badge/🧠_Drawing_Intelligence-Creative_Pattern_AI-F39C12?style=for-the-badge&logo=figma&logoColor=white" />
-<img src="https://img.shields.io/badge/👁️_Facial_ASD_Detection-Vision_AI-8E44AD?style=for-the-badge&logo=opencv&logoColor=white" />
-
+<img src="https://img.shields.io/badge/📝_Handwriting-Analysis-blue?style=for-the-badge" />
+<img src="https://img.shields.io/badge/🎨_Coloring-Emotion_Expression-green?style=for-the-badge" />
+<img src="https://img.shields.io/badge/✏️_Drawing-Creativity_Recognition-orange?style=for-the-badge" /> 
+<img src="https://img.shields.io/badge/👁️_Facial_Recognition-ASD_Detection-red?style=for-the-badge" />
 <br><br>
 
 ## Demo Video
