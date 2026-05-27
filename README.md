@@ -381,44 +381,6 @@ flutter run
 
 ---
 
-# Ethical Considerations
-
-This project is designed as a supportive AI tool and NOT a medical diagnosis system.
-
-- Results should not replace professional evaluation
-- Child data privacy is important
-- Predictions should be interpreted carefully
-
----
-
-# Future Improvements
-
-- Speech Analysis Integration
-- Reinforcement Learning
-- Wearable Device Integration
-- Larger Clinical Datasets
-- Attention-Based Fusion Models
-
----
-
-# Author
-
-## Ranudi Gayathmie Kariyapperuma
-
-AI Enthusiast • Flutter Developer • UI/UX Designer • AI Researcher
-
----
-
-# Support
-
-If you like this project:
-
-- Star the repository
-- Fork the project
-- Share with others
-
----
-
 <div align="center">
 
 ## Empowering Children with Autism Through AI & Adaptive Learning
