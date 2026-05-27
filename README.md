@@ -4,9 +4,13 @@
 
 <br><br>
 
-# 🧠 Multimodal AI-Assisted Adaptive Learning Companion for Children with Autism
+# Multimodal AI-Assisted Adaptive Learning Companion for Children with Autism
 
-### 🚀 AI-Powered Multimodal ASD Detection & Adaptive Learning System
+<img src="https://github.com/user-attachments/assets/36e3eca8-0d36-40dc-a1dc-1dc812cd7e73" width="70%" />
+
+<br><br>
+
+## EMO BUDDY APP
 
 <br>
 
@@ -19,11 +23,11 @@
 
 <br><br>
 
-🎨 Coloring • ✍️ Handwriting • 🖍️ Drawing • 🙂 Facial Recognition
+Handwriting • Coloring • Drawing • Facial Recognition
 
 <br>
 
-# 🎥 Demo Video
+## Demo Video
 
 https://github.com/user-attachments/assets/f586c2c0-8875-40d4-82f4-d07a02700f82
 
@@ -31,38 +35,38 @@ https://github.com/user-attachments/assets/f586c2c0-8875-40d4-82f4-d07a02700f82
 
 ---
 
-# 📌 Overview
+# Overview
 
 This project presents a **Multimodal AI-Assisted Adaptive Learning Companion** designed for children with **Autism Spectrum Disorder (ASD)**.
 
 The system combines:
 
-- ✍️ Handwriting Analysis
-- 🎨 Coloring Analysis
-- 🖍️ Drawing Analysis
-- 🙂 Facial Recognition
-- 🧠 CNN + XGBoost + MobileNetV2
-- 🎮 Adaptive Learning Games
+- Handwriting Analysis
+- Coloring Analysis
+- Drawing Analysis
+- Facial Recognition
+- CNN + XGBoost + MobileNetV2
+- Adaptive Learning Games
 
 to provide intelligent ASD prediction and personalized learning support.
 
 ---
 
-# 🌟 Key Features
+# Key Features
 
-✅ Multimodal ASD Detection  
-✅ CNN + XGBoost Hybrid Pipeline  
-✅ MobileNetV2 Facial Recognition  
-✅ Image Mismatch Detection  
-✅ Severity Classification  
-✅ Adaptive Learning Games  
-✅ TFLite Mobile Deployment  
-✅ Flutter Mobile Application  
-✅ FastAPI Backend Integration  
+- Multimodal ASD Detection
+- CNN + XGBoost Hybrid Pipeline
+- MobileNetV2 Facial Recognition
+- Image Mismatch Detection
+- Severity Classification
+- Adaptive Learning Games
+- TFLite Mobile Deployment
+- Flutter Mobile Application
+- FastAPI Backend Integration
 
 ---
 
-# 🧩 System Workflow
+# System Workflow
 
 ```text
 User Uploads Image
@@ -86,19 +90,19 @@ Adaptive Game Recommendation
 
 ---
 
-# 🔹 Module 01 — Activity-Based ASD Detection
+# Module 01 — Activity-Based ASD Detection
 
 This module analyzes:
 
-- ✍️ Handwriting
-- 🎨 Coloring
-- 🖍️ Drawing
+- Handwriting
+- Coloring
+- Drawing
 
 images uploaded by users.
 
 ---
 
-# 🧠 Stage 01 — Category Classification
+# Stage 01 — Category Classification
 
 The category classifier identifies uploaded images as:
 
@@ -110,7 +114,7 @@ The category classifier identifies uploaded images as:
 
 ---
 
-# 📊 Category Classifier Results
+# Category Classifier Results
 
 | Metric | Result |
 |---|---|
@@ -118,7 +122,7 @@ The category classifier identifies uploaded images as:
 
 ---
 
-# 🧠 Stage 02 — ASD Detection
+# Stage 02 — ASD Detection
 
 After validation:
 
@@ -128,9 +132,9 @@ After validation:
 
 ---
 
-# 📈 ASD Detection Results
+# ASD Detection Results
 
-## 🔥 CNN
+## CNN
 
 | Metric | Result |
 |---|---|
@@ -139,7 +143,7 @@ After validation:
 
 ---
 
-## 🔥 XGBoost
+## XGBoost
 
 | Metric | Result |
 |---|---|
@@ -148,7 +152,7 @@ After validation:
 
 ---
 
-# ❌ Image Mismatch Detection
+# Image Mismatch Detection
 
 If a user uploads the wrong image type, the system automatically detects the mismatch.
 
@@ -160,7 +164,7 @@ If a user uploads the wrong image type, the system automatically detects the mis
 
 ---
 
-# 📂 Dataset 01 — Activity Dataset
+# Dataset 01 — Activity Dataset
 
 ## Severity Levels
 
@@ -186,13 +190,13 @@ If a user uploads the wrong image type, the system automatically detects the mis
 
 ---
 
-# 🔹 Module 02 — Facial ASD Detection
+# Module 02 — Facial ASD Detection
 
 This module uses facial recognition to identify ASD-related facial characteristics.
 
 ---
 
-# 📂 Facial Recognition Dataset Structure
+# Facial Recognition Dataset Structure
 
 ```bash
 train/
@@ -209,7 +213,7 @@ non_autistic/
 
 ---
 
-# 📊 Facial Dataset Summary
+# Facial Dataset Summary
 
 | Split | Images |
 |---|---|
@@ -220,9 +224,9 @@ non_autistic/
 
 ---
 
-# 🧠 Facial Model Architecture
+# Facial Model Architecture
 
-## 🔥 MobileNetV2 Transfer Learning
+## MobileNetV2 Transfer Learning
 
 ```text
 Input Image
@@ -244,7 +248,7 @@ Sigmoid Output
 
 ---
 
-# 📈 Facial ASD Detection Results
+# Facial ASD Detection Results
 
 | Metric | Result |
 |---|---|
@@ -256,28 +260,28 @@ Sigmoid Output
 
 ---
 
-# 🧠 Final Combined Detection
+# Final Combined Detection
 
 The final system combines outputs from:
 
-- ✍️ Handwriting
-- 🎨 Coloring
-- 🖍️ Drawing
-- 🙂 Facial Recognition
+- Handwriting
+- Coloring
+- Drawing
+- Facial Recognition
 
 using a weighted average fusion mechanism.
 
 ---
 
-# 🎯 Final Outputs
+# Final Outputs
 
-✅ Overall ASD Percentage  
-✅ ASD Presence Detection  
-✅ Severity Classification  
+- Overall ASD Percentage
+- ASD Presence Detection
+- Severity Classification
 
 ---
 
-# 🚦 Severity Levels
+# Severity Levels
 
 | Level | Description |
 |---|---|
@@ -287,7 +291,7 @@ using a weighted average fusion mechanism.
 
 ---
 
-# 🎮 Adaptive Learning Games
+# Adaptive Learning Games
 
 | Severity | Recommended Games |
 |---|---|
@@ -297,7 +301,7 @@ using a weighted average fusion mechanism.
 
 ---
 
-# 🛠️ Technologies Used
+# Technologies Used
 
 | Technology | Purpose |
 |---|---|
@@ -314,7 +318,7 @@ using a weighted average fusion mechanism.
 
 ---
 
-# 📦 Saved Models
+# Saved Models
 
 ```bash
 models/category_classifier.keras
@@ -327,7 +331,7 @@ models/facial_asd_model.tflite
 
 ---
 
-# 📁 Project Structure
+# Project Structure
 
 ```bash
 project/
@@ -342,9 +346,9 @@ project/
 
 ---
 
-# 🚀 Installation
+# Installation
 
-## 1️⃣ Clone Repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/your-username/your-repository-name.git
@@ -352,7 +356,7 @@ git clone https://github.com/your-username/your-repository-name.git
 
 ---
 
-## 2️⃣ Install Dependencies
+## Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -360,7 +364,7 @@ pip install -r requirements.txt
 
 ---
 
-## 3️⃣ Run FastAPI Backend
+## Run FastAPI Backend
 
 ```bash
 uvicorn main:app --reload
@@ -368,7 +372,7 @@ uvicorn main:app --reload
 
 ---
 
-## 4️⃣ Run Flutter Application
+## Run Flutter Application
 
 ```bash
 flutter pub get
@@ -377,9 +381,9 @@ flutter run
 
 ---
 
-# 🔐 Ethical Considerations
+# Ethical Considerations
 
-⚠️ This project is designed as a supportive AI tool and NOT a medical diagnosis system.
+This project is designed as a supportive AI tool and NOT a medical diagnosis system.
 
 - Results should not replace professional evaluation
 - Child data privacy is important
@@ -387,36 +391,36 @@ flutter run
 
 ---
 
-# 🚀 Future Improvements
+# Future Improvements
 
-- 🎤 Speech Analysis Integration
-- 🧠 Reinforcement Learning
-- ⌚ Wearable Device Integration
-- 📈 Larger Clinical Datasets
-- 🤖 Attention-Based Fusion Models
+- Speech Analysis Integration
+- Reinforcement Learning
+- Wearable Device Integration
+- Larger Clinical Datasets
+- Attention-Based Fusion Models
 
 ---
 
-# 👩‍💻 Author
+# Author
 
 ## Ranudi Gayathmie Kariyapperuma
 
-💡 AI Enthusiast | Flutter Developer | UI/UX Designer | AI Researcher
+AI Enthusiast • Flutter Developer • UI/UX Designer • AI Researcher
 
 ---
 
-# ⭐ Support
+# Support
 
 If you like this project:
 
-🌟 Star the repository  
-🍴 Fork the project  
-📢 Share with others  
+- Star the repository
+- Fork the project
+- Share with others
 
 ---
 
 <div align="center">
 
-# 💙 Empowering Children with Autism Through AI & Adaptive Learning
+## Empowering Children with Autism Through AI & Adaptive Learning
 
 </div>
