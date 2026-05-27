@@ -4,13 +4,10 @@
 
 <br>
 
-# Multimodal AI-Assisted Adaptive Learning Companion for Children with Autism
+# Multimodal AI-Assisted Adaptive Learning Companion for Children with Autism - <b> EMO BUDDY APP </b>
 
 <img src="https://github.com/user-attachments/assets/36e3eca8-0d36-40dc-a1dc-1dc812cd7e73" width="90%" />
 
-<br>
-
-## EMO BUDDY APP
 
 <br>
 
