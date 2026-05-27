@@ -315,6 +315,7 @@ using a weighted average fusion mechanism.
 # Technologies Used
 
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/5e57ae4f-1117-466c-8aa7-348295042d01" />
+
 ---
 
 # Saved Models
