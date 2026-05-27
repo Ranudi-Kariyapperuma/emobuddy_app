@@ -1,5 +1,7 @@
 # emobuddy_app
 
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/bd7bff9c-1717-434d-bc66-7919babb3de6" />
+
 A new Flutter project.
 
 ## Getting Started
