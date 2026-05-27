@@ -331,21 +331,6 @@ models/facial_asd_model.tflite
 
 ---
 
-# Project Structure
-
-```bash
-project/
-│
-├── backend/
-├── frontend/
-├── models/
-├── datasets/
-├── notebooks/
-└── README.md
-```
-
----
-
 
 <div align="center">
 
