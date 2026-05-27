@@ -346,40 +346,6 @@ project/
 
 ---
 
-# Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/your-username/your-repository-name.git
-```
-
----
-
-## Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Run FastAPI Backend
-
-```bash
-uvicorn main:app --reload
-```
-
----
-
-## Run Flutter Application
-
-```bash
-flutter pub get
-flutter run
-```
-
----
 
 <div align="center">
 
